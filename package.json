@@ -1,0 +1,45 @@
+{
+  "name": "8bit_phone",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "webpack-dev-server --open --config webpack/webpack.dev.js",
+    "build": "webpack --config webpack/webpack.prod.js",
+    "dev": "yarn run build -- --watch"
+  },
+  "keywords": [],
+  "author": "Alzar",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "@babel/core": "^7.11.4",
+    "@babel/preset-env": "^7.11.0",
+    "babel-loader": "^8.1.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "copy-webpack-plugin": "^6.0.3",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "url-loader": "^4.1.0",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^5.1.2"
+  },
+  "dependencies": {
+    "animejs": "^3.1.0",
+    "css-loader": "^3.2.0",
+    "font-awesome": "^4.7.0",
+    "inputmask": "^5.0.1",
+    "jQuery": "^1.7.4",
+    "jquery": "^3.4.1",
+    "jquery-ui": "^1.12.1",
+    "materialize": "^1.0.0",
+    "materialize-css": "^1.0.0",
+    "moment": "^2.24.0",
+    "node-sass": "^4.13.0",
+    "nouislider": "^14.1.1",
+    "sass-loader": "^8.0.0",
+    "style-loader": "^1.0.0"
+  }
+}
