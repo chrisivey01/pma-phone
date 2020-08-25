@@ -9,6 +9,7 @@
             border-radius: 5px;
             border: 1px solid $border-color;
             text-align: center;
+            overflow:auto;
     
             h3 {
                 color: $alt-text;
@@ -19,7 +20,6 @@
 
             &:last-child {
                 position: absolute;
-                bottom: 0;
                 width: 100%;
                 margin: 0;
             

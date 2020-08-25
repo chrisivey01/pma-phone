@@ -1,3 +1,178 @@
+const SetUp = { 
+
+    // window.postMessage(
+    //     {
+            action: 'setup', 
+            data:[
+                {
+                    "data": {
+                        "id": 2,
+                        "name": "Eduardo Chupador",
+                        "phone": "426-684-7563"
+                    },
+                    "name": "myData"
+                },
+                {
+                    "data": [
+                        {
+                            "color": "#006064",
+                            "container": "contacts",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Contacts",
+                            "icon": "<i class=\"fas fa-address-book\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "#01579b",
+                            "container": "phone",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Phone",
+                            "icon": "<i class=\"fas fa-phone\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "#311b92",
+                            "container": "message",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Messages",
+                            "icon": "<i class=\"fas fa-comment-alt\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#d7252a",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "bank",
+                            "name": "Bank",
+                            "icon": "<i class=\"fas fa-university\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "#039be5",
+                            "container": "twitter",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Twitter",
+                            "icon": "<i class=\"fab fa-twitter\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "#f9a825",
+                            "container": "yp",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Yellow Pages",
+                            "icon": "<i class=\"fas fa-ad\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#808080",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "garage",
+                            "name": "Garage",
+                            "icon": "<i class=\"fas fa-car\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#1be8b5",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "pdm",
+                            "name": "Vehicle Repos",
+                            "icon": "<i class=\"fas fa-money-check-alt\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#935c5c",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "asana",
+                            "name": "Asana",
+                            "icon": "<i class=\"fas fa-briefcase\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#56b000",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "website",
+                            "name": "Los Santos Web",
+                            "icon": "<i class=\"fas fa-globe\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#d7252a",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "stocks",
+                            "name": "Info",
+                            "icon": "<i class=\"fas fa-user-circle\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
+                            "color": "#FF4500",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "camera",
+                            "name": "Camera",
+                            "icon": "<i class=\"fas fa-camera-retro\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "color": "#404040",
+                            "container": "settings",
+                            "unread": 0,
+                            "dumpable": 0,
+                            "name": "Settings",
+                            "icon": "<i class=\"fas fa-cogs\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "hsl(333, 100%, 50%)",
+                            "container": "dumper",
+                            "unread": 0,
+                            "dumpable": 2,
+                            "name": "Dumper",
+                            "icon": "<i class=\"fas fa-download\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "color": "#7654b4",
+                            "container": "irc",
+                            "unread": 0,
+                            "dumpable": 2,
+                            "name": "Dark Chat",
+                            "icon": "<i class=\"fas fa-user-secret\"></i>",
+                            "enabled": true
+                        },
+                        {
+                            "color": "#004d40",
+                            "container": "tuner",
+                            "unread": 0,
+                            "dumpable": 2,
+                            "name": "Tuner",
+                            "icon": "<i class=\"fas fa-microchip\"></i>",
+                            "enabled": false
+                        }
+                    ],
+                    "name": "apps"
+                }
+            ]
+        // }
+    // )
+}
+
 var Settings = {
     volume: 0,
     wallpaper: 1,
@@ -398,6 +573,7 @@ var IRCMessages = [
 ];
 
 export default {
+    SetUp,
     Settings,
     PlayerDetails,
     Contacts,
