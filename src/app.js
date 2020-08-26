@@ -101,9 +101,9 @@ $(function() {
 
     Utils.UpdateWallpaper(`url(./assets/images/back00${settings.wallpaper}.png)`);
     Utils.SetMute(settings.volume === 0);
-
+    // let focusedItem = document.activeElement
     document.onkeyup = function(data) {
-        if (data.which == 114 || data.which == 27) {
+        if ((data.which == 85 || data.which == 27) && !$(document.activeElement).is(':focus')) {
             ClosePhone();
         }
     };

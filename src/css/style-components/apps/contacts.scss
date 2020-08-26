@@ -22,13 +22,12 @@
         }
 
         .contacts-list {
-            height: 86.4%;
+            height: 83.4%;
             overflow-y: auto;
             overflow-x: hidden;
 
             .contact {
                 border-bottom: 1px solid $border-color;
-                padding: 10px;
                 display: block;
                 color: $border-color;
                 background: $primary;
@@ -58,7 +57,6 @@
                     pointer-events: none;
 
                     .contact-name-text {
-                        width: 50%;
                         display: inline-block;
                         overflow: hidden;
                         white-space: nowrap;

@@ -130,6 +130,7 @@
                         background: $primary;
                         color: $border-color;
                         border-bottom: 1px solid $border-color;
+                        display:flex;
 
                         &:hover {
                             background: $primary-hover;
@@ -151,20 +152,21 @@
                         
                         span {
                             display: inline-block;
-                            width: 45%;
+                            // width: 100%;
                             overflow: hidden;
                             white-space: nowrap;
                             text-overflow: ellipsis;
                             font-size: 15px;
-                            line-height: 15px;
+                            line-height: 35px;
                             pointer-events: none;
+                            flex-grow:1;
                         }
 
                         .timestamp {
-                            max-width: 44%;
+                            // max-width: 44%;
                             text-align: right;
                             float: right;
-                            line-height: 40px;
+                            // line-height: 40px;
                             font-size: 14px;
                             overflow: hidden;
                             white-space: nowrap;

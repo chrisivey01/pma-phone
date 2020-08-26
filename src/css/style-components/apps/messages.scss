@@ -135,7 +135,7 @@
         }
 
         .convo-texts-list {
-            height: 84%;
+            height: 492px;
             overflow-y: auto;
             overflow-x: hidden;
 
@@ -155,6 +155,7 @@
                     padding: 10px 20px 10px 20px;
                     border-radius: 10px;
                     background: $main-color;
+                    word-break: break-word;
                 }
 
                 p {
