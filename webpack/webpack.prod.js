@@ -10,7 +10,10 @@ module.exports = merge(common, {
 
     output: {
         filename: "index.js",
-        path: path.join(__dirname, "../dist"),
+        path: path.resolve(
+            "C:/FXServer/server-data/resources/8bit_phone/dist"
+        )
+        // path: path.join(__dirname, "../dist"),
     },
     plugins: [
         new HtmlWebpackPlugin({

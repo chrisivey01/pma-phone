@@ -1,0 +1,15 @@
+#garage-container {
+    background: $background;
+
+    .inner-app{
+        #garage-body{
+            border: 1px solid $border-color;
+            background-color:(130, 156, 208);
+            
+            .row-garage{
+                color: #007AB7; 
+                font-weight:bolder;
+            }
+        }
+    }
+}
