@@ -9,13 +9,16 @@ const getAllCars = () => {
     $.post(Config.ROOT_ADDRESS + '/LoadGarage', (results) => {
         results.forEach(car => {
             let homeGarageImpound;
-            if(car.state === true){
+            if(car.in_city === true){
+                homeGarageImpound = 'In City';
+            }else if(car.state === true && car.private_parking === false){
                 homeGarageImpound = 'In Garage';
+            } else if(car.private_parking === true && car.state === true){
+                homeGarageImpound = 'Home Garage';
             } else if(car.state === false) {
                 homeGarageImpound = 'Impounded';
-            } else if(car.private_parking === true){
-                homeGarageImpound = 'Home Garage';
             }
+
             let tr = $('<tr class="row-garage">');
             tr.append('<td>' + car.plate + '</td>' + " " + '<td>' + homeGarageImpound  + '</td>')
             table.append(tr)

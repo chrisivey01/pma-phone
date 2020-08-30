@@ -197,9 +197,10 @@ window.addEventListener('message-convo-open-app', (data) => {
 
     $('#message-convo-container').data('data', data.detail);
 
-    let texts = messages.filter(
+    let texts = messages
+    .filter(
         c =>
-            (c.sender == data.detail.number && c.receiver == myNumber) ||
+            (c.sender == data.detail.number &&  myNumber) ||
             (c.sender == myNumber && c.receiver == data.detail.number)
     );
     let contact = contacts.filter(c => c.number == data.detail.number)[0];
