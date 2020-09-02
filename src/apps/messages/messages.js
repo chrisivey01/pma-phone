@@ -57,6 +57,9 @@ window.addEventListener('message-open-app', (data) => {
             obj.number = message.sender;
         }
 
+        if(message.number === undefined && message.message === undefined && message.receiver === undefined){
+            return false;
+        }
         obj.message = message.message;
         obj.receiver = message.receiver;
         obj.sender = message.sender;
@@ -86,7 +89,6 @@ window.addEventListener('message-open-app', (data) => {
         let contact = null;
         if (contacts != null) {
             contact = contacts.filter(c => c.number == message.number)[0];
-        } else {
         }
 
         // Not A Contact

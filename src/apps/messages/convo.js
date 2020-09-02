@@ -138,7 +138,7 @@ function ReceiveText(sender, text) {
 
     if (viewingConvo != null) {
         let contact = contacts.filter(c => c.number == viewingConvo.number)[0];
-        if (viewingConvo.number == viewingConvo.sender) {
+        if (viewingConvo.number == text.sender) {
             if (contact != null) {
                 $('.convo-texts-list').append(
                     '<div class="text other-sender"><span class=" other-' +
@@ -200,7 +200,7 @@ window.addEventListener('message-convo-open-app', (data) => {
     let texts = messages
     .filter(
         c =>
-            (c.sender == data.detail.number &&  myNumber) ||
+            (c.sender == data.detail.number && c.receiver == myNumber) ||
             (c.sender == myNumber && c.receiver == data.detail.number)
     );
     let contact = contacts.filter(c => c.number == data.detail.number)[0];
