@@ -5,9 +5,10 @@ import Data from '../../utils/data';
 import Notif from '../../utils/notification';
 import Convo from './convo';
 
-var myNumber = null;
-var contacts = null;
-var messages = null;
+let myNumber = null;
+let contacts = null;
+let messages = null;
+let getMessageNumber = null;
 
 $('#screen-content').on('click', '.messages-list .message', (event) => {
     App.OpenApp('message-convo', $(event.currentTarget).data('message'), false, true);
@@ -17,6 +18,8 @@ $('#screen-content').on('change', '#message-new-contact', (event) => {
     let data = $(event.currentTarget).val();
     $('#message-new-number').val(data);
 });
+
+
 
 $('#screen-content').on('submit', '#message-new-msg', (event) => {
     event.preventDefault();
@@ -63,6 +66,7 @@ window.addEventListener('message-open-app', (data) => {
         obj.message = message.message;
         obj.receiver = message.receiver;
         obj.sender = message.sender;
+        getMessageNumber = message.receiver;
 
         obj.time = new Date(message.sent_time);
 
@@ -170,6 +174,31 @@ function SendNewText(data, cb) {
                 Notif.Alert('Unable To Send Text');
 
                 cb(false);
+            }
+        }
+    );
+}
+
+function CreateCall(number, nonStandard, receiver) {
+    $.post(
+        Config.ROOT_ADDRESS + '/CreateCall',
+        JSON.stringify({
+            number: number,
+            nonStandard: nonStandard
+        }),
+        function(status) {
+            if (status > 0) {
+                App.OpenApp('phone-call', {
+                    number: number,
+                    nonStandard: nonStandard,
+                    receiver: receiver
+                });
+            } else if (status == -2) {
+                Notif.Alert('Can\'t Call Yourself, Idiot');
+            } else if (status == -3) {
+                Notif.Alert('Number is Busy');
+            } else {
+                Notif.Alert('Number Not Currently Active');
             }
         }
     );

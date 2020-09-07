@@ -7,7 +7,7 @@ import Messages from './messages';
 var myNumber = null;
 var contacts = null;
 var messages = null;
-
+var getMessageNumber = null;
 window.addEventListener('message', (event) => {
     switch (event.data.action) {
         case 'receiveText':
@@ -197,9 +197,12 @@ window.addEventListener('message-convo-open-app', (data) => {
 
     $('#message-convo-container').data('data', data.detail);
 
+    getMessageNumber = data.detail.number
     let texts = messages
     .filter(
         c =>
+            (data.detail.receiver === "police" || data.detail.receiver === "ambulance" || data.detail.receiver === "lawyer"  || data.detail.receiver === "realtor" || data.detail.receiver === "mechanic" || data.detail.receiver === "taxi" ||
+            data.detail.receiver === "gsc" || data.detail.receiver === "cardealer"   && data.receiver == myNumber) ||
             (c.sender == data.detail.number && c.receiver == myNumber) ||
             (c.sender == myNumber && c.receiver == data.detail.number)
     );
@@ -293,5 +296,35 @@ window.addEventListener('message-convo-close-app', (data) => {
     $('.convo-texts-list').html('');
     $('.convo-top-bar').attr('class', 'convo-top-bar');
 });
+
+$('#screen-content').on('click', '.convo-action-call', (event) => {
+    CreateCall(getMessageNumber, false, false);  
+})
+
+function CreateCall(number, nonStandard, receiver) {
+    $.post(
+        Config.ROOT_ADDRESS + '/CreateCall',
+        JSON.stringify({
+            number: number,
+            nonStandard: nonStandard
+        }),
+        function(status) {
+            if (status > 0) {
+                App.OpenApp('phone-call', {
+                    number: number,
+                    nonStandard: nonStandard,
+                    receiver: receiver
+                });
+            } else if (status == -2) {
+                Notif.Alert('Can\'t Call Yourself, Idiot');
+            } else if (status == -3) {
+                Notif.Alert('Number is Busy');
+            } else {
+                Notif.Alert('Number Not Currently Active');
+            }
+        }
+    );
+}
+
 
 export default { ReceiveText };
