@@ -74,6 +74,8 @@ $("#screen-content").on("submit", "#convo-new-text", (event) => {
     let text = [
         {
             value: convoData.number,
+            receiver: convoData.receiver,
+             
         },
         {
             value: data[0].value,
@@ -212,7 +214,7 @@ window.addEventListener("message-convo-open-app", (data) => {
             (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
             (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
             (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == myNumber && c.receiver == data.detail.number)
+            (c.receiver == data.detail.number)
     );
     let contact = contacts.filter((c) => c.number == data.detail.number)[0];
 

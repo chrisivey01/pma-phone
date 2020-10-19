@@ -54,34 +54,31 @@ window.addEventListener('message-open-app', (data) => {
     $.each(messages, (index, message) => {
         let obj = new Object();
 
-        if (message.sender == myNumber) {
-            obj.number = message.receiver;
-        } else {
+        if (message.sender !== myNumber) {
+        //     obj.number = message.receiver;
+        // } else {
             obj.number = message.sender;
-        }
 
-        if(message.number === undefined && message.message === undefined && message.receiver === undefined){
-            return false;
-        }
-        obj.message = message.message;
-        obj.receiver = message.receiver;
-        obj.sender = message.sender;
-        getMessageNumber = message.receiver;
+            obj.message = message.message;
+            obj.receiver = message.receiver;
+            obj.sender = message.sender;
+            getMessageNumber = message.receiver;
 
-        obj.time = new Date(message.sent_time);
+            obj.time = new Date(message.sent_time);
 
-        let convo = convos.filter(c => c.number === obj.number)[0];
+            let convo = convos.filter(c => c.number === obj.number)[0];
 
-        if (convo == null) {
-            convos.push(obj);
-        } else {
-            if (obj.time > convo.time) {
-                $.each(convos, (index, c) => {
-                    if (c == convo) {
-                        convos[index] = obj;
-                        return false;
-                    }
-                });
+            if (convo == null) {
+                convos.push(obj);
+            } else {
+                if (obj.time > convo.time) {
+                    $.each(convos, (index, c) => {
+                        if (c == convo) {
+                            convos[index] = obj;
+                            return false;
+                        }
+                    });
+                }
             }
         }
     });
@@ -162,8 +159,8 @@ function SendNewText(data, cb) {
 
                 Data.AddData('messages', {
                     sender: myNumber,
-                    receiver: textData.receiver,
-                    message: textData.message,
+                    receiver: data[0].value,
+                    message: data[1].value,
                     sent_time: textData.sent_time,
                     sender_read: 0,
                     receiver_read: 0
