@@ -28,5 +28,5 @@ module.exports = merge(common, {
             ],
         }),
     ],
-    devtool: "inline-source-map",
+    devtool: "eval-source-map",
 });

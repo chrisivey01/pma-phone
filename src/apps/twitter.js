@@ -64,7 +64,7 @@ $('#screen-content').on('submit', '#new-tweet', function (event) {
             } else {
                 // tweet.author = status.author;
 
-                AddTweet(tweet);
+                // AddTweet(tweet);
 
                 let modal = M.Modal.getInstance($('#send-tweet-modal'));
                 modal.close();
