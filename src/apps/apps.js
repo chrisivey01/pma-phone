@@ -10,6 +10,7 @@ import IRC from "./irc/irc";
 import Settings from "./settings";
 import Dumper from "./dumper/dumper";
 import Garage from "./garage";
+import Racing from "./racing/racing";
 
 export default {
     Home,
@@ -24,4 +25,5 @@ export default {
     Settings,
     Dumper,
     Garage,
+    Racing,
 };
