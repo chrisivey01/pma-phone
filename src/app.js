@@ -272,4 +272,4 @@ function GetCurrentApp() {
     return appTrail[appTrail.length - 1].app;
 }
 
-export default { GoHome, GoBack, OpenApp, RefreshApp, GetCurrentApp };
+export default { GoHome, GoBack, OpenApp, RefreshApp, GetCurrentApp, ClosePhone };

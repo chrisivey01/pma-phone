@@ -71,7 +71,7 @@ var Apps = [
         icon: '<i class="fas fa-download"></i>',
         color: 'hsl(333, 100%, 50%)',
         unread: 0,
-        enabled: true,
+        enabled: false,
         dumpable: 1
     },
     {
@@ -89,8 +89,17 @@ var Apps = [
         icon: '<i class="fas fa-tools"></i>',
         color: '#004d40',
         unread: 0,
-        enabled: true,
+        enabled: false,
         dumpable: 2
+    },
+    {
+        name: 'Racing',
+        container: 'racing',
+        icon: '<i class="fas fa-flag-checkered"></i>',
+        color: '#15E593',
+        unread: 0,
+        enabled: true,
+        dumpable: 0
     },
 ];
 
