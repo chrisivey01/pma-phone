@@ -81,6 +81,16 @@ const SetUp = {
                         },
                         {
                             "customExit": false,
+                            "color": "#15E593",
+                            "dumpable": 0,
+                            "unread": 0,
+                            "container": "racing",
+                            "name": "Racing",
+                            "icon": "<i class=\"fas fa-flag-checkered\"></i>",
+                            "enabled": false
+                        },
+                        {
+                            "customExit": false,
                             "color": "#1be8b5",
                             "dumpable": 0,
                             "unread": 0,

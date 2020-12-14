@@ -1,0 +1,131 @@
+#racing-container {
+    background: $background;
+
+    .inner-app{
+        #racing-header {
+            border-bottom: 1px solid $border-color;
+            justify-content: center;
+            // border: 1px solid $border-color;
+            padding: 0;
+            display: flex;
+        }
+        #racing-buttons {
+            margin: 5;
+            justify-content: center;
+            display: flex;
+            .updateButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: rgb(231, 93, 12);
+            }
+            .createRaceButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: aquamarine;
+            }
+            .saveRaceButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: aquamarine;
+            }
+            .clearRaceButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: aquamarine;
+            }
+            // .loadRaceButton {
+            //     padding: 4;
+            //     margin: 5;
+            //     border: 1px solid $border-color;
+            //     background-color: aquamarine;
+            // }
+            // .startRaceButton {
+            //     padding: 4;
+            //     margin: 5;
+            //     border: 1px solid $border-color;
+            //     background-color: aquamarine;
+            // }
+        }
+        #racing-list {
+            margin: 10;
+            justify-content: space-evenly;
+            text-align: center;
+            .row-racing{
+                color: #007AB7; 
+                font-weight:bolder;
+            }
+            .race-name {
+                text-transform: capitalize;
+            }
+            .loadRaceButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: rgb(233, 233, 233);
+            }
+            .deleteRaceButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: rgb(233, 233, 233);
+            }
+
+        }
+        .saveButton {
+            padding: 4;
+            margin: 5;
+            border: 1px solid $border-color;
+            background-color: rgb(226, 226, 226);
+            text-align: center;
+        }
+        .startButton {
+            padding: 4;
+            margin: 5;
+            border: 1px solid $border-color;
+            background-color: rgb(226, 226, 226);
+        }
+        #racing-footer {
+            justify-content: center;
+            display: flex;
+            .startButton {
+                padding: 4;
+                margin: 5;
+                border: 1px solid $border-color;
+                background-color: rgb(132, 233, 123);
+            }
+        }
+    }
+
+    #racing-save-race {
+        overflow: visible;
+        .dropdown-content {
+            max-height: 1000%;
+        
+            li {
+                span {
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+    }
+    // #racing-new-modal {
+    //     overflow: visible;
+    //     .dropdown-content {
+    //         max-height: 1000%;
+        
+    //         li {
+    //             span {
+    //                 overflow: hidden;
+    //                 white-space: nowrap;
+    //                 text-overflow: ellipsis;
+    //             }
+    //         }
+    //     }
+    // }
+}

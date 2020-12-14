@@ -1,0 +1,59 @@
+<div class="app-container" id="racing-container">
+    <div class="inner-app">
+        <div id="racing-header">
+            <h4>Racing</h4>           
+        </div>
+        <div id="racing-buttons">
+            <button class="createRaceButton">Create Race</button>
+            <button class="clearRaceButton">Clear Race</button>
+            <!-- <button class="saveRaceButton" data-target="racing-save-race">Save Race</button> -->
+            <a class="saveButton modal-trigger waves-effect waves-red" data-target="racing-new-modal">Save Race</a>
+            <!-- <button class="loadRaceButton">Load Race</button>
+            <button class="startRaceButton">Start Race</button> -->
+            <button class="updateButton">Update Tracks</button>
+        </div>
+        <div id="racing-list"></div>
+        <div id="racing-footer">
+            <a class="startButton modal-trigger waves-effect waves-red" data-target="racing-race-start-modal">Start Race</a>
+        </div>
+        
+    </div>
+
+    <div id="racing-new-modal" class="modal">
+        <div class="modal-content">
+            <h6>Race Name (No Spaces)</h6>
+            <form id="racing-new-race">
+                <div class="input-field col s12">
+                    <textarea id="racing-new-race" name="racing-new-race" class="materialize-textarea char-count-input" data-length="255" maxlength="12" required></textarea>
+                    <label for="racing-new-race">EX: rally-track</label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-red btn">Cancel</a>
+            <button class="btn waves-effect waves-red modal-close" type="submit" form="racing-new-race">Save</button>
+        </div>
+    </div>
+
+    <div id="racing-race-start-modal" class="modal">
+        <div class="modal-content">
+            <h5>Race Setup</h5>
+            <form id="racing-race-start">
+                <div class="input-field col s12">
+                    <h6>Race Bet Amount</h6>
+                    <textarea id="racing-race-bet" name="racing-race-bet" class="materialize-textarea char-count-input" data-length="255" maxlength="8" placeholder="0, 500, 1000" required></textarea>
+                    <!-- <label for="racing-race-bet">EX: 0, 500, 1000</label> -->
+                </div>
+                <div class="input-field col s12">
+                    <h6>Race Start Delay (seconds)</h6>
+                    <textarea id="racing-race-delay" name="racing-race-delay" class="materialize-textarea char-count-input" data-length="255" maxlength="12" placeholder="0, 5, 15" required></textarea>
+                    <!-- <label for="racing-race-delay">EX: 0, 5, 15</label> -->
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-red btn">Cancel</a>
+            <button class="btn waves-effect waves-red modal-close" type="submit" form="racing-race-start">Start</button>
+        </div>
+    </div>
+</div>
