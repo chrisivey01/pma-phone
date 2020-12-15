@@ -82,22 +82,30 @@ window.addEventListener('irc-convo-open-app', (data) => {
     $('#irc-channel-name').val(data.detail.channel.channel);
     $('.message-list').html('');
     let messages = Data.GetData(`irc-messages-${data.detail.channel.channel}`);
-    if (messages == null || messages.length == 0) {
-        $.post(Config.ROOT_ADDRESS + '/IRCGetMessages', JSON.stringify({
-            channel: data.detail.channel.channel
-        }), (msgs) => {
-            Data.StoreData(`irc-messages-${data.detail.channel.channel}`, msgs);
-            msgs.sort(Utils.DateSortOldest);
-            SetupMessages(msgs);
-        });
-    } else {
-        messages.sort(Utils.DateSortOldest);
-        SetupMessages(messages);
-    }
+    // if (messages == null || messages.length == 0) {
+    $.post(Config.ROOT_ADDRESS + '/IRCGetMessages', JSON.stringify({
+        channel: data.detail.channel.channel
+    }), (msgs) => {
+        Data.StoreData(`irc-messages-${data.detail.channel.channel}`, msgs);
+        msgs.sort(Utils.DateSortOldest);
+        SetupMessages(msgs);
+    });
+    // } else {
+    //     messages.sort(Utils.DateSortOldest);
+    //     SetupMessages(messages);
+    // }
 });
 
 window.addEventListener('irc-convo-close-app', () => {
-    
+    // $("#message-convo-container").removeData("data");
+    $('.message-list').html('');
 });
 
 export default {}
+
+
+// window.addEventListener("message-convo-close-app", (data) => {
+
+
+//     // $(".convo-top-bar").attr("class", "convo-top-bar");
+// });

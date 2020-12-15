@@ -142,7 +142,7 @@
         }
 
         .message-list {
-            height: 83%;
+            height: 73%;
             overflow-y: auto;
             overflow-x: hidden;
 
@@ -172,9 +172,12 @@
         }
 
         .irc-text-input {
-            height: 9.5%;
+            height: 60px;
+            bottom: 21px;
+            width: 345px;
             border-top: 1px solid $irc-channel-brdr;
             background: $irc-channel-bg;
+            position:absolute;
 
             #irc-new-message {
                 -webkit-margin-after: 0;
