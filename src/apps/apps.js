@@ -24,6 +24,4 @@ export default {
     IRC,
     Settings,
     Dumper,
-    Garage,
-    Racing,
 };

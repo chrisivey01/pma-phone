@@ -2,7 +2,7 @@ $tuner-color: color('teal', 'darken-4');
 
 #tuner-container, #tuner-legal-container, #tuner-quick-container, #tuner-custom-container, #tuner-info-container {
     background: $alt-text;
-    font-family: monospace;
+    // font-family: monospace;
 
     .inner-app {
         top: 0 !important;

@@ -1,37 +1,29 @@
-const path = require("path");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const paths = require('./paths')
 
 module.exports = {
-    entry: "./src/app.js",
-    // output: {
-    //     path: path.resolve(__dirname, "../dist"),
-    //     filename: "bundle.js",
-    //     publicPath: "assets",
-    // },
+    entry: [paths.src + '/app.js'],
+
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            inject: true,
+            template: "src/index.html",
+        }),
+    ],
+
     module: {
         rules: [
+
             {
-                test: /\.js$/,
-                exclude: [path.resolve(__dirname, "node_modules")],
-                loader: "babel-loader",
-            },
-            {
-                test: /\.s[ac]ss$/i,
+                test: /\.(sa|sc|c)ss$/,
                 use: ["style-loader", "css-loader", "sass-loader"],
             },
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: ["file-loader"],
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: ["file-loader"],
+                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
+                use: "url-loader?limit=100000",
             },
         ],
-    },
-    performance: {
-        hints: false,
-        assetFilter: (assetFilename) =>
-            !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
     },
 };

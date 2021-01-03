@@ -1,26 +1,15 @@
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
 
 module.exports = merge(common, {
     mode: "production",
-
     output: {
-        filename: "index.js",
-        path: path.resolve(
-            "C:/FXServer/server-data/resources/8bit_phone/dist"
-        )
-        // path: path.join(__dirname, "../dist"),
+        filename: "[name].js",
+        path: path.resolve("C:/FXServer/server-data/resources/8bit_phone/dist"),
     },
     plugins: [
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: "src/index.html",
-        }),
-        new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
                 { from: "src/assets", to: "assets" },
@@ -28,5 +17,19 @@ module.exports = merge(common, {
             ],
         }),
     ],
+    optimization: {
+        minimize: true,
+        // Once your build outputs multiple chunks, this option will ensure they share the webpack runtime
+        // instead of having their own. This also helps with long-term caching, since the chunks will only
+        // change when actual code changes, not the webpack runtime.
+        runtimeChunk: {
+            name: "runtime",
+        },
+    },
+    performance: {
+        hints: false,
+        maxEntrypointSize: 512000,
+        maxAssetSize: 512000,
+    },
     devtool: "eval-source-map",
 });

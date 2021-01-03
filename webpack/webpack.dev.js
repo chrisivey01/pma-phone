@@ -1,25 +1,20 @@
 const { merge } = require("webpack-merge");
 const common = require("./webpack.common");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
-const path = require("path");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const paths = require('./paths')
 
 module.exports = merge(common, {
     mode: "development",
-    // entry:"./src/app.js",
+    devtool: "inline-source-map",
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
-        new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: "src/index.html",
-        }),
     ],
     devServer: {
-        contentBase: path.join(__dirname, '../src/'),
+        contentBase: paths.src,
         historyApiFallback: true,
+        open: true,
+        compress: true,
         hot: true,
+        port: 8080,
     },
-    devtool: "inline-source-map",
 });
