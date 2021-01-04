@@ -232,14 +232,18 @@ window.addEventListener("message-convo-open-app", (data) => {
 
     $(".convo-texts-list").html("");
     $.each(texts, (index, text) => {
-        let d = new Date(text.sent_time);
+        let serverTime = new Date(text.sent_time);
+        let clientTime = new Date(serverTime.getTime()+serverTime.getTimezoneOffset()*60*1000);
+        let offset = serverTime.getTimezoneOffset() / 60;
+        let hours = serverTime.getHours();
+        clientTime.setHours(hours - offset);
 
         if (text.sender == myNumber) {
             $(".convo-texts-list").append(
                 '<div class="text me-sender"><span>' +
                     text.message +
                     "</span><p>" +
-                    moment(d).fromNowOrNow() +
+                    moment(clientTime).fromNowOrNow() +
                     "</p></div>"
             );
 
@@ -252,7 +256,7 @@ window.addEventListener("message-convo-open-app", (data) => {
                             '">' +
                             text.message +
                             "</span><p>" +
-                            moment(d).fromNowOrNow() +
+                            moment(clientTime).fromNowOrNow() +
                             "</p></div>"
                     );
                 } else {
@@ -260,7 +264,7 @@ window.addEventListener("message-convo-open-app", (data) => {
                         '<div class="text other-sender"><span>' +
                             text.message +
                             "</span><p>" +
-                            moment(d).fromNowOrNow() +
+                            moment(clientTime).fromNowOrNow() +
                             "</p></div>"
                     );
                 }
@@ -273,7 +277,7 @@ window.addEventListener("message-convo-open-app", (data) => {
                         '">' +
                         text.message +
                         "</span><p>" +
-                        moment(d).fromNowOrNow() +
+                        moment(clientTime).fromNowOrNow() +
                         "</p></div>"
                 );
             } else {
@@ -281,7 +285,7 @@ window.addEventListener("message-convo-open-app", (data) => {
                     '<div class="text other-sender"><span>' +
                         text.message +
                         "</span><p>" +
-                        moment(d).fromNowOrNow() +
+                        moment(clientTime).fromNowOrNow() +
                         "</p></div>"
                 );
             }

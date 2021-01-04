@@ -20,10 +20,13 @@ $('#screen-content').on('submit', '#new-tweet', function (event) {
     let myData = Data.GetData('myData');
     let data = $(event.currentTarget).serializeArray();
 
+
+
+    let clientTime = new Date();
     let tweet = {
         author: myData.name,
         message: data[0].value,
-        time: Date.now()
+        time: clientTime.getTime() + (clientTime.getTimezoneOffset() * 60000)
     };
 
     Data.AddData('tweets', tweet);
@@ -52,6 +55,11 @@ $('#screen-content').on('submit', '#new-tweet', function (event) {
         );
     });
 
+
+    // let offset = serverTime.getTimezoneOffset() / 60;
+    // let hours = serverTime.getHours();
+    // clientTime.setHours(hours - offset);
+
     $.post(Config.ROOT_ADDRESS + '/NewTweet',  JSON.stringify({
             message: data[0].value,
             time: tweet.time,
@@ -62,9 +70,9 @@ $('#screen-content').on('submit', '#new-tweet', function (event) {
             if (!status) {
                 Notif.Alert('Failed Sending Tweet');
             } else {
-                // tweet.author = status.author;
+                tweet.author = status.author;
 
-                // AddTweet(tweet);
+                AddTweet(tweet);
 
                 let modal = M.Modal.getInstance($('#send-tweet-modal'));
                 modal.close();
@@ -126,22 +134,30 @@ function AddTweet(tweet) {
         tweet.message = tweet.message.replace(hashtag, `<span class="hashtag" data-hashtag="${hashtag.replace('#', '')}">' + hashtag + '</span>`);
     }); */
 
-    $('.twitter-body').prepend(`
-        <div class="tweet">
-            <div class="avatar other-${tweet.author[0]
-            .toString()
-            .toLowerCase()}">${tweet.author[0]}</div>
-            <div class="author">${tweet.author}</div>
-            <div class="body">${tweet.message}</div>
-            <div class="time" data-tooltip="${moment(tweet.time).format(
-                'MM/DD/YYYY'
-            )} ${moment(tweet.time).format('hh:mmA')}">${moment(tweet.time).fromNowOrNow()}</div>
-        </div>`);
+    let serverTime = new Date(tweet.time);
+    let clientTime = new Date(serverTime.getTime()+serverTime.getTimezoneOffset()*60*1000);
+    let offset = serverTime.getTimezoneOffset() / 60;
+    let hours = serverTime.getHours();
+    clientTime.setHours(hours - offset);
 
-    $('.twitter-body .tweet:first-child .time').tooltip({
-        position: top
-    });
-    $('.twitter-body .tweet:first-child').data('data', tweet);
+    if(tweet.author){
+        $('.twitter-body').prepend(`
+            <div class="tweet">
+                <div class="avatar other-${tweet.author[0]
+                .toString()
+                .toLowerCase()}">${tweet.author[0]}</div>
+                <div class="author">${tweet.author}</div>
+                <div class="body">${tweet.message}</div>
+                <div class="time" data-tooltip="${moment(clientTime).format(
+                    'MM/DD/YYYY'
+                // )} ${moment(tweet.time).format('hh:mmA')}">${moment(tweet.time).fromNowOrNow()}</div>
+                )} ${moment(clientTime).format('hh:mmA')}">${moment(clientTime).fromNowOrNow()}</div>
+            </div>`);
+        $('.twitter-body .tweet:first-child .time').tooltip({
+            position: top
+        });
+        $('.twitter-body .tweet:first-child').data('data', tweet);
+    }
 }
 
 window.addEventListener('twitter-open-app', (data) => {
@@ -152,7 +168,14 @@ window.addEventListener('twitter-open-app', (data) => {
     }
 
     tweets.sort(Utils.DateSortOldest);
-
+    
+    tweets = tweets.filter((item,i) => typeof item.time === "number");
+    tweets.map((item, i) => {
+        if(item.time === tweets[i].time){
+            tweets.splice(i, 1)
+        }
+    })
+     
     $('.twitter-body').html('');
     $.each(tweets, function (index, tweet) {
         AddTweet(tweet)

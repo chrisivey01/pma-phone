@@ -73,27 +73,31 @@ $('#screen-content').on('submit', '#irc-leave-channel', (event) => {
 
 function SetupMessages(messages) {
     $.each(messages, (index, message) => {
-        $('.message-list').prepend(`<div class="irc-message"><span class="message-text">${message.message}</span><span class="message-time">${moment(message.date).fromNowOrNow()}</span></div>`);
+        let serverTime = new Date(message.date);
+        let clientTime = new Date(serverTime.getTime()+serverTime.getTimezoneOffset()*60*1000);
+        let offset = serverTime.getTimezoneOffset() / 60;
+        let hours = serverTime.getHours();
+        clientTime.setHours(hours - offset);
+
+        $('.message-list').prepend(`<div class="irc-message"><span class="message-text">${message.message}</span><span class="message-time">${moment(clientTime).fromNowOrNow()}</span></div>`);
     });
 }
 
 window.addEventListener('irc-convo-open-app', (data) => {
-    $('.irc-channel').html(data.detail.channel.channel);
-    $('#irc-channel-name').val(data.detail.channel.channel);
-    $('.message-list').html('');
-    let messages = Data.GetData(`irc-messages-${data.detail.channel.channel}`);
-    // if (messages == null || messages.length == 0) {
-    $.post(Config.ROOT_ADDRESS + '/IRCGetMessages', JSON.stringify({
-        channel: data.detail.channel.channel
-    }), (msgs) => {
-        Data.StoreData(`irc-messages-${data.detail.channel.channel}`, msgs);
-        msgs.sort(Utils.DateSortOldest);
-        SetupMessages(msgs);
-    });
-    // } else {
-    //     messages.sort(Utils.DateSortOldest);
-    //     SetupMessages(messages);
-    // }
+    if(data.detail.channel !== undefined){
+        $('.irc-channel').html(data.detail.channel.channel);
+        $('#irc-channel-name').val(data.detail.channel.channel);
+        $('.message-list').html('');
+        let messages = Data.GetData(`irc-messages-${data.detail.channel.channel}`);
+        // if (messages == null || messages.length == 0) {
+        $.post(Config.ROOT_ADDRESS + '/IRCGetMessages', JSON.stringify({
+            channel: data.detail.channel.channel
+        }), (msgs) => {
+            Data.StoreData(`irc-messages-${data.detail.channel.channel}`, msgs);
+            msgs.sort(Utils.DateSortOldest);
+            SetupMessages(msgs);
+        });
+    }
 });
 
 window.addEventListener('irc-convo-close-app', () => {
