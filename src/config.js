@@ -53,7 +53,7 @@ var Apps = [
         icon: '<i class="fas fa-ad"></i>',
         color: '#f9a825',
         unread: 0,
-        enabled: true,
+        enabled: false,
         dumpable: 0
     },
     {
@@ -101,6 +101,16 @@ var Apps = [
         enabled: true,
         dumpable: 0
     },
+    {
+        name: 'Camera',
+        container: 'camera',
+        icon: "<i class=\"fas fa-camera-retro\"></i>",
+        color: "#FF4500",
+        unread: 0,
+        enabled: true,
+        dumpable: 0
+    },
 ];
+
 
 export default { ROOT_ADDRESS, Apps };

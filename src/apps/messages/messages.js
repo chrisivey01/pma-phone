@@ -92,12 +92,6 @@ window.addEventListener('message-open-app', (data) => {
             contact = contacts.filter(c => c.number == message.number)[0];
         }
 
-        let serverTime = new Date(message.time);
-        let clientTime = new Date(serverTime.getTime()+serverTime.getTimezoneOffset()*60*1000);
-        let offset = serverTime.getTimezoneOffset() / 60;
-        let hours = serverTime.getHours();
-        clientTime.setHours(hours - offset);
-
         // Not A Contact
         if (contact == null) {
             $('#message-container .inner-app .messages-list').append(
@@ -106,7 +100,7 @@ window.addEventListener('message-open-app', (data) => {
                     '</div><div class="text-message">' +
                     message.message +
                     '</div><div class="text-time">' +
-                    moment(clientTime).fromNowOrNow() +
+                    moment(message.time).fromNowOrNow() +
                     '</div></div>'
             );
         } else {
@@ -120,7 +114,7 @@ window.addEventListener('message-open-app', (data) => {
                     '</div><div class="text-message"> ' +
                     message.message +
                     '</div><div class="text-time">' +
-                    moment(clientTime).fromNowOrNow() +
+                    moment(message.time).fromNowOrNow() +
                     '</div></div>'
             );
         }

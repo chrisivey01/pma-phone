@@ -11,6 +11,7 @@ import Settings from "./settings";
 import Dumper from "./dumper/dumper";
 import Garage from "./garage";
 import Racing from "./racing/racing";
+import Camera from "./camera";
 
 export default {
     Home,
@@ -24,4 +25,7 @@ export default {
     IRC,
     Settings,
     Dumper,
+    Garage,
+    Racing,
+    Camera,
 };
