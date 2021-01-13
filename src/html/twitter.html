@@ -1,6 +1,9 @@
 <div class="app-container" id="twitter-container">
     <div class="inner-app">
-        <div class="twitter-header waves-effect waves-light modal-trigger" data-target="send-tweet-modal">
+        <div
+            class="twitter-header waves-effect waves-light modal-trigger"
+            data-target="send-tweet-modal"
+        >
             <i class="fab fa-twitter"></i>
             <i class="fas fa-plus"></i>
         </div>
@@ -11,12 +14,69 @@
         <div class="modal-content">
             <h6>Send Tweet</h6>
             <form id="new-tweet">
-                <input type="text" class="validate char-count-input" id="new-tweet-msg" name="new-tweet-msg" maxlength="255" data-length="255" required>
+                <input
+                    type="text"
+                    class="validate char-count-input"
+                    id="new-tweet-msg"
+                    name="new-tweet-msg"
+                    maxlength="255"
+                    data-length="255"
+                    required
+                />
             </form>
         </div>
+
+        <div class="emoji-container">
+            <div class="emoji-wrapper">
+                <a class="emoji">😀</a> <a class="emoji">😁</a>
+                <a class="emoji">😂</a> <a class="emoji">😃</a>
+                <a class="emoji">😄</a> <a class="emoji">😅</a>
+                <a class="emoji">😆</a> <a class="emoji">😇</a>
+                <a class="emoji">👍</a> <a class="emoji">👌</a>
+                <a class="emoji">😈</a> <a class="emoji">😉</a>
+                <a class="emoji">😊</a> <a class="emoji">😋</a>
+                <a class="emoji">😎</a> <a class="emoji">😏</a>
+                <a class="emoji">😐</a> <a class="emoji">😑</a>
+                <a class="emoji">😒</a> <a class="emoji">😓</a>
+                <a class="emoji">😔</a> <a class="emoji">😕</a>
+                <a class="emoji">😖</a> <a class="emoji">😗</a>
+                <a class="emoji">😘</a> <a class="emoji">😙</a>
+                <a class="emoji">😚</a> <a class="emoji">😛</a>
+                <a class="emoji">😜</a> <a class="emoji">😝</a>
+                <a class="emoji">😞</a> <a class="emoji">😟</a>
+                <a class="emoji">😠</a> <a class="emoji">😡</a>
+                <a class="emoji">😣</a> <a class="emoji">😤</a>
+                <a class="emoji">😥</a> <a class="emoji">😦</a>
+                <a class="emoji">😧</a> <a class="emoji">😨</a>
+                <a class="emoji">😩</a> <a class="emoji">😪</a>
+                <a class="emoji">😫</a> <a class="emoji">😬</a>
+                <a class="emoji">😭</a> <a class="emoji">😮</a>
+                <a class="emoji">😯</a> <a class="emoji">😰</a>
+                <a class="emoji">😱</a> <a class="emoji">😲</a>
+                <a class="emoji">😳</a> <a class="emoji">😴</a>
+            </div>
+        </div>
+
         <div class="modal-footer">
-            <a class="modal-close btn waves-effect waves-light light-blue darken-1">Cancel</a>
-            <button class="btn waves-effect waves-light light-blue darken-1" type="submit" form="new-tweet">Tweet</button>
+            <a
+                class="modal-close btn waves-effect waves-light light-blue darken-1"
+                >Cancel</a
+            >
+            <button
+                class="btn waves-effect waves-light light-blue darken-1"
+                type="submit"
+                form="new-tweet"
+            >
+                Tweet
+            </button>
+            <button
+                class="btn waves-effect waves-light light-blue darken-1"
+                title="Emojis"
+                id="emojis"
+            >
+                🤓
+            </button>
         </div>
     </div>
+    <div id="emoji-selector">😀 😁 😂 😃 😄 😅 😆 😇 👍 👌</div>
 </div>

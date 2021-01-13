@@ -163,7 +163,15 @@ window.addEventListener("twitter-open-app", (data) => {
     }
 
     tweets.sort(Utils.DateSortOldest);
-
+    //convert bytes
+    tweets = tweets.map((t) => {
+        //check
+        if (Array.isArray(t.message)) {
+            t.message = String.fromCodePoint(...t.message);
+            return t;
+        }
+        return t;
+    });
     tweets = tweets.reduce((arr, item) => {
         const removed = arr.filter((i) => i.message !== item.message);
         return [...removed, item];
@@ -188,7 +196,13 @@ function ReceiveNewTweet(tweet) {
     Data.AddData("tweets", tweet);
 
     $(".twitter-alert-header").find("span").html(tweet.author);
-    $(".twitter-alert-body").html(tweet.message);
+    {
+        typeof tweet.message === "Array"
+            ? $(".twitter-alert-body").html(
+                  String.fromCharCode(...tweet.message)
+              )
+            : $(".twitter-alert-body").html(tweet.message);
+    }
     $(".twitter-alert").fadeIn();
     notif = setTimeout(function () {
         $(".twitter-alert").fadeOut("normal", function () {
@@ -204,5 +218,14 @@ function ReceiveNewTweet(tweet) {
         AddTweet(tweet);
     }
 }
+
+$("#screen-content").on("click", "#emojis", (event) => {
+    $(".emoji-container").css("display", "flex");
+});
+
+$("#screen-content").on("click", ".emoji", (event) => {
+    $("#new-tweet-msg")[0].value =
+        $("#new-tweet-msg")[0].value + event.currentTarget.text;
+});
 
 export default { ReceiveNewTweet };
