@@ -297,7 +297,10 @@ const tabHandler = (item, i) => {
 $("#screen-content").on("click", "#photo", (event) => {
     event.preventDefault();
     ClosePhone();
-    $.post("http://8bit_phone/openCamera", (resultURL) => {
+    $.post("http://8bit_phone/openCamera",JSON.stringify({
+        // Enter box ips HERE w/ PORT & /upload
+        ip: 'http://[IP]/upload',
+    }),(resultURL) => {
         if (resultURL != "") {
             let url = resultURL;
             let myData = Data.GetData("myData");

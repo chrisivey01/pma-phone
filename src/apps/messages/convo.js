@@ -70,7 +70,10 @@ $("#screen-content").on("click", ".convo-action-camera", (event) => {
     event.preventDefault();
     ClosePhone();
     let convoData = $("#message-convo-container").data("data");
-    $.post("http://8bit_phone/openCamera", (resultURL) => {
+    $.post("http://8bit_phone/openCamera",JSON.stringify({
+        // Enter box ips HERE w/ PORT & /upload
+        ip: 'http://[IP]/upload',
+    }),(resultURL) => {
         if ( resultURL != "" ) {
             console.log(resultURL);
             let url = resultURL
