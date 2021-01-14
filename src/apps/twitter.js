@@ -7,6 +7,7 @@ import emojisJson from '../smiley';
 
 var tweets = null;
 var notif = null;
+let categoryArray = null;
 
 window.addEventListener("message", (event) => {
     switch (event.data.action) {
@@ -249,9 +250,9 @@ $("#screen-content").on("click", "#emojis", (event) => {
     })
 
     let tabs = $( "#tabs" ).tabs();
-    let array = [...emojiCategories.keys()]
-    array.forEach(item => $("#smiley-tabs").append(`<li><a href=${item} data-ajax="false">${item}</a></li>`))
-    array.forEach(item => $('<div class=overflow id=' + item + '></div>').appendTo("#tabs ul")[0])
+    categoryArray = [...emojiCategories.keys()]
+    categoryArray.forEach((item,i) => $("#smiley-tabs").append(`<li><a id=${item}>${item}</a></li>`))
+    categoryArray.forEach(item => $('<div class=overflow id=' + item + '></div>').appendTo("#tabs ul")[0])
     objArray.map(item => {
         $(`<a>${item.char}</a>`).appendTo(`#${item.category}`)
     })
@@ -264,6 +265,16 @@ $("#screen-content").on("click", "a", (event) => {
 })
 
 
+$("#screen-content").on("click", "li a", (event) => {
+    const getIndex = event.currentTarget.id;
+    const indexFinder = categoryArray.findIndex(cat => cat === getIndex)
+})
+
+
+
+const tabHandler = (item, i) => {
+    console.log(i)
+}
 // Object.keys(emojisJson).forEach(key => {
 //     if(!emojiCategories.get(key)){
 //         emojiCategories.set(emojiJson[key].category, {

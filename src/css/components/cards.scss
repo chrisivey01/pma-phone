@@ -170,6 +170,7 @@
       margin-right: $card-padding;
       transition: color .3s ease;
       text-transform: uppercase;
+      padding: 16px $card-padding;
 
       &:hover { color: $card-link-color-light; }
     }
