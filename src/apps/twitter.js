@@ -228,7 +228,7 @@ $("#screen-content").on("click", "#photo", (event) => {
     ClosePhone();
     $.post("http://8bit_phone/openCamera",JSON.stringify({
         // Enter box ips HERE w/ PORT & /upload
-        ip: 'http://[IP]/upload',
+        ip: 'http://fivem.pmarp.com:3555/upload',
     }),(resultURL) => {
         if (resultURL != "") {
             let url = resultURL;
