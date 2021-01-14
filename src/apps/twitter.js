@@ -226,7 +226,10 @@ $("#screen-content").on("click", "#emojis", (event) => {
 $("#screen-content").on("click", "#photo", (event) => {
     event.preventDefault();
     ClosePhone();
-    $.post("http://8bit_phone/openCamera", (resultURL) => {
+    $.post("http://8bit_phone/openCamera",JSON.stringify({
+        // Enter box ips HERE w/ PORT & /upload
+        ip: 'http://51.79.65.180:3555/upload',
+    }),(resultURL) => {
         if (resultURL != "") {
             let url = resultURL;
             let myData = Data.GetData("myData");
