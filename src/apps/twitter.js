@@ -223,6 +223,106 @@ $("#screen-content").on("click", "#emojis", (event) => {
     $(".emoji-container").css("display", "flex");
 });
 
+$("#screen-content").on("click", "#photo", (event) => {
+    event.preventDefault();
+    ClosePhone();
+    $.post("http://8bit_phone/openCamera", (resultURL) => {
+        if (resultURL != "") {
+            let url = resultURL;
+            let myData = Data.GetData("myData");
+            let clientTime = new Date();
+
+            let tweet = {
+                author: myData.name,
+                message: url,
+                time: clientTime.getTime(),
+            };
+
+            $.post(
+                Config.ROOT_ADDRESS + "/NewTweet",
+                JSON.stringify({
+                    message: tweet.message,
+                    time: tweet.time,
+                    mentions: [],
+                    hashtags: [],
+                }),
+                function (status) {
+                    if (!status) {
+                        Notif.Alert("Failed Sending Tweet");
+                    } else {
+                        tweet.author = status.author;
+        
+                        // AddTweet(tweet);
+        
+                        let modal = M.Modal.getInstance($("#send-tweet-modal"));
+                        modal.close();
+                        $("#new-tweet-msg").val("");
+        
+                        Notif.Alert("Tweet Sent");
+                    }
+                }
+            );
+
+        }
+    })
+});
+
+const ClosePhone = () => {
+    $.post("http://8bit_phone/ClosePhone", JSON.stringify({})),
+        $(".wrapper").hide("slide", {
+            direction: "down",
+        });
+};
+// $("#screen-content").on("click", "#photo", (event) => {
+//     event.preventDefault();
+//     ClosePhone();
+//     let convoData = $("#message-convo-container").data("data");
+//     $.post("http://8bit_phone/openCamera", (resultURL) => {
+//         if ( resultURL != "" ) {
+//             console.log(resultURL);
+//             let url = resultURL
+
+//             let text = [
+//                 {
+//                     value: convoData.number,
+//                     receiver: convoData.receiver,
+                     
+//                 },
+//                 {
+//                     value: url,
+//                 },
+//             ];
+        
+//             Messages.SendNewText(text, (sent) => {
+//                 if (sent) {
+//                     $(".convo-texts-list").append(
+//                         '<div class="text me-sender"><span>' +
+//                             url +
+//                             "</span><p>" +
+//                             moment(Date.now()).fromNowOrNow() +
+//                             "</p></div>"
+//                     );
+        
+//                     Notif.Alert("Message Sent");
+        
+//                     $("#convo-input").val("");
+        
+//                     if ($(".convo-texts-list .text:last-child").offset() != null) {
+//                         $(".convo-texts-list").animate(
+//                             {
+//                                 scrollTop:
+//                                     $(".convo-texts-list")[0].scrollHeight -
+//                                     $(".convo-texts-list")[0].clientHeight,
+//                             },
+//                             200
+//                         );
+//                     }
+//                 }
+//             });
+//         }
+//     });
+// });
+
 $("#screen-content").on("click", ".emoji", (event) => {
     $("#new-tweet-msg")[0].value =
         $("#new-tweet-msg")[0].value + event.currentTarget.text;

@@ -66,6 +66,75 @@ $("#screen-content").on("submit", "#convo-add-contact", (event) => {
     );
 });
 
+$("#screen-content").on("click", ".convo-action-camera", (event) => {
+    event.preventDefault();
+    ClosePhone();
+    let convoData = $("#message-convo-container").data("data");
+    $.post("http://8bit_phone/openCamera", (resultURL) => {
+        if ( resultURL != "" ) {
+            console.log(resultURL);
+            let url = resultURL
+
+            let text = [
+                {
+                    value: convoData.number,
+                    receiver: convoData.receiver,
+                     
+                },
+                {
+                    value: url,
+                },
+            ];
+        
+            Messages.SendNewText(text, (sent) => {
+                if (sent) {
+                    $(".convo-texts-list").append(
+                        '<div class="text me-sender"><span>' +
+                            url +
+                            "</span><p>" +
+                            moment(Date.now()).fromNowOrNow() +
+                            "</p></div>"
+                    );
+        
+                    Notif.Alert("Message Sent");
+        
+                    $("#convo-input").val("");
+        
+                    if ($(".convo-texts-list .text:last-child").offset() != null) {
+                        $(".convo-texts-list").animate(
+                            {
+                                scrollTop:
+                                    $(".convo-texts-list")[0].scrollHeight -
+                                    $(".convo-texts-list")[0].clientHeight,
+                            },
+                            200
+                        );
+                    }
+                }
+            });
+        }
+    });
+
+    
+
+    // $.post(Config.ROOT_ADDRESS + "/openCamera", (result) => {
+    //     console.log(result);
+    //     url = result;
+    // });
+    // console.log(url);
+})
+
+const ClosePhone = () => {
+    $.post("http://8bit_phone/ClosePhone", JSON.stringify({})),
+        $(".wrapper").hide("slide", {
+            direction: "down",
+        });
+};
+
+// $("#screen-content").on("click", ".convo-action-call", (event) => {
+//     CreateCall(getMessageNumber, false, false);
+// });
+
 $("#screen-content").on("submit", "#convo-new-text", (event) => {
     event.preventDefault();
     let convoData = $("#message-convo-container").data("data");
