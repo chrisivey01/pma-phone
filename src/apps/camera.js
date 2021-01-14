@@ -7,7 +7,7 @@ const ClosePhone = () => {
 
 window.addEventListener("camera-open-app", function (t) {
     ClosePhone();
-    $.post("http://8bit_phone/opencamera", JSON.stringify({}));
+    $.post("http://8bit_phone/openCamera", JSON.stringify({}));
 });
 
 

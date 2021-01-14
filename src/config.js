@@ -1,5 +1,12 @@
 var ROOT_ADDRESS = 'http://8bit_phone';
 
+var helpers = {
+    "//": "REQUIRE https://github.com/citizenfx/screenshot-basic or set false",
+    "enableTakePhoto": true,
+    "fileUploadService_Url": "http://localhost:3555/upload/",
+    "fileUploadService_Field": "files[]",
+}
+
 var Apps = [
     {
         name: 'Contacts',
