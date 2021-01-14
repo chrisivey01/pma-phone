@@ -224,7 +224,7 @@ function ReceiveNewTweet(tweet) {
 $("#screen-content").on("click", "#emojis", (event) => {
     $(".emoji-container").css("display", "flex");
     let emojiCategories = new Map();
-
+    $("#smiley-tabs").empty()
     const objArray = [];
     //converts object of many objects to an array
     Object.keys(emojisJson).forEach(key => objArray.push({
@@ -243,7 +243,7 @@ $("#screen-content").on("click", "#emojis", (event) => {
         }
     })
 
-    let tabs = $( "#tabs" ).tabs();
+    
     categoryArray = [...emojiCategories.keys()]
     categoryArray = categoryArray.filter(item => item !== "flags")
     categoryArray.forEach((item,i) => $(`<li><a style="font-size:10px" href=#${item}>${item}</a></li>`).appendTo('#smiley-tabs'))
@@ -251,6 +251,7 @@ $("#screen-content").on("click", "#emojis", (event) => {
     objArray.map(item => {
         $(`<a id=emoji>${item.char}</a>`).appendTo(`div #${item.category}`)
     })
+    let tabs = $( "#tabs" ).tabs();
     tabs.tabs("refresh");
 })
 
