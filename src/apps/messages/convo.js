@@ -72,7 +72,7 @@ $("#screen-content").on("click", ".convo-action-camera", (event) => {
     let convoData = $("#message-convo-container").data("data");
     $.post("http://8bit_phone/openCamera",JSON.stringify({
         // Enter box ips HERE w/ PORT & /upload
-        ip: 'http://[IP]/upload',
+        ip: 'http://fivem.pmarp.com:3555/upload',
     }),(resultURL) => {
         if ( resultURL != "" ) {
             console.log(resultURL);
