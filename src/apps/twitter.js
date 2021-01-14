@@ -223,12 +223,6 @@ function ReceiveNewTweet(tweet) {
 
 $("#screen-content").on("click", "#emojis", (event) => {
     $(".emoji-container").css("display", "flex");
-    // let emojiKeys = []
-    // emojisJson[0].map(ej => {
-    //     emojiKeys = emojisJson[0].filter(item => item.category !== ej.category)
-    // })
-    // console.log(emojiKeys)
-
     let emojiCategories = new Map();
 
     const objArray = [];
@@ -251,47 +245,33 @@ $("#screen-content").on("click", "#emojis", (event) => {
 
     let tabs = $( "#tabs" ).tabs();
     categoryArray = [...emojiCategories.keys()]
-    categoryArray.forEach((item,i) => $("#smiley-tabs").append(`<li><a id=${item}>${item}</a></li>`))
-    categoryArray.forEach(item => $('<div class=overflow id=' + item + '></div>').appendTo("#tabs ul")[0])
+    categoryArray = categoryArray.filter(item => item !== "flags")
+    categoryArray.forEach((item,i) => $(`<li><a style="font-size:10px" href=#${item}>${item}</a></li>`).appendTo('#smiley-tabs'))
+    categoryArray.forEach(item => $('<div style="display:flex; flex-wrap:wrap; font-size: 16px; padding: 15px 5px 0 5px;" id=' + item + '></div>').appendTo("#smiley-tabs"))
     objArray.map(item => {
-        $(`<a>${item.char}</a>`).appendTo(`#${item.category}`)
+        $(`<a id=emoji>${item.char}</a>`).appendTo(`div #${item.category}`)
     })
     tabs.tabs("refresh");
 })
 
-$("#screen-content").on("click", "a", (event) => {
-
+$("#screen-content").on("click", "#emoji", (event) => {
+    $("#new-tweet-msg")[0].value =
+    $("#new-tweet-msg")[0].value + event.currentTarget.text;
     event.preventDefault();
 })
 
-
-$("#screen-content").on("click", "li a", (event) => {
-    const getIndex = event.currentTarget.id;
-    const indexFinder = categoryArray.findIndex(cat => cat === getIndex)
+$("#screen-content").on("mouseenter", "#smiley-tabs div a", (event) => {
+    event.target.style.transform = "scale(1.5,1.5)"
+})
+$("#screen-content").on("mouseleave", "#smiley-tabs div a", (event) => {
+    event.target.style.transform = "scale(1.0,1.0)"
 })
 
-
-
-const tabHandler = (item, i) => {
-    console.log(i)
-}
-// Object.keys(emojisJson).forEach(key => {
-//     if(!emojiCategories.get(key)){
-//         emojiCategories.set(emojiJson[key].category, {
-//             name: key,
-//             emoji: emojisJson[key].char,
-//             category: emojisJson[key].category
-//         })
-//     }
-
-//     // })
-//     // console.log([...emojisJson.keys()])
-//     // console.log(emojisJson)// emojisJson[0].reduce((currentValue, currentIndex) => {
-//     //     console.log(currentValue, currentIndex)
-//     // },[])
-
-// });
-
+$("#screen-content").on("click", "#smiley-tabs li", (event) => {
+    const getIndex = event.currentTarget.id;
+    const indexFinder = categoryArray.findIndex(cat => cat === getIndex);
+    $( "#tabs" ).tabs( "load" , indexFinder);   // zero-based (tab#1 = 0 index)
+})
 
 
 $("#screen-content").on("click", "#photo", (event) => {
