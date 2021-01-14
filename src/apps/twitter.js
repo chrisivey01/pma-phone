@@ -3,6 +3,7 @@ import Config from "../config";
 import Utils from "../utils/utils";
 import Data from "../utils/data";
 import Notif from "../utils/notification";
+import emojisJson from '../smiley';
 
 var tweets = null;
 var notif = null;
@@ -137,16 +138,16 @@ function AddTweet(tweet) {
         $(".twitter-body").prepend(`
             <div class="tweet">
                 <div class="avatar other-${tweet.author[0]
-                    .toString()
-                    .toLowerCase()}">${tweet.author[0]}</div>
+                .toString()
+                .toLowerCase()}">${tweet.author[0]}</div>
                 <div class="author">${tweet.author}</div>
                 <div class="body">${tweet.message}</div>
                 <div class="time" data-tooltip="${moment(tweet.time).format(
                     "MM/DD/YYYY"
                     // )} ${moment(tweet.time).format('hh:mmA')}">${moment(tweet.time).fromNowOrNow()}</div>
                 )} ${moment(tweet.time).format("hh:mmA")}">${moment(
-            tweet.time
-        ).fromNowOrNow()}</div>
+                    tweet.time
+                ).fromNowOrNow()}</div>
             </div>`);
         $(".twitter-body .tweet:first-child .time").tooltip({
             position: top,
@@ -199,8 +200,8 @@ function ReceiveNewTweet(tweet) {
     {
         typeof tweet.message === "Array"
             ? $(".twitter-alert-body").html(
-                  String.fromCharCode(...tweet.message)
-              )
+                String.fromCharCode(...tweet.message)
+            )
             : $(".twitter-alert-body").html(tweet.message);
     }
     $(".twitter-alert").fadeIn();
@@ -221,7 +222,66 @@ function ReceiveNewTweet(tweet) {
 
 $("#screen-content").on("click", "#emojis", (event) => {
     $(".emoji-container").css("display", "flex");
-});
+    // let emojiKeys = []
+    // emojisJson[0].map(ej => {
+    //     emojiKeys = emojisJson[0].filter(item => item.category !== ej.category)
+    // })
+    // console.log(emojiKeys)
+
+    let emojiCategories = new Map();
+
+    const objArray = [];
+    //converts object of many objects to an array
+    Object.keys(emojisJson).forEach(key => objArray.push({
+        name: key,
+        category: emojisJson[key].category,
+        char: emojisJson[key].char
+    }));
+
+    //converts array to map with categories
+    objArray.map(item => {
+        if (emojiCategories.get(item.category)) {
+            emojiCategories.get(item.category).push({ name: item.name, char: item.char })
+        } else {
+            emojiCategories.set(item.category, [])
+            emojiCategories.get(item.category).push({ name: item.name, char: item.char })
+        }
+    })
+
+    let tabs = $( "#tabs" ).tabs();
+    let array = [...emojiCategories.keys()]
+    array.forEach(item => $("#smiley-tabs").append(`<li><a href=${item} data-ajax="false">${item}</a></li>`))
+    array.forEach(item => $('<div class=overflow id=' + item + '></div>').appendTo("#tabs ul")[0])
+    objArray.map(item => {
+        $(`<a>${item.char}</a>`).appendTo(`#${item.category}`)
+    })
+    tabs.tabs("refresh");
+})
+
+$("#screen-content").on("click", "a", (event) => {
+
+    event.preventDefault();
+})
+
+
+// Object.keys(emojisJson).forEach(key => {
+//     if(!emojiCategories.get(key)){
+//         emojiCategories.set(emojiJson[key].category, {
+//             name: key,
+//             emoji: emojisJson[key].char,
+//             category: emojisJson[key].category
+//         })
+//     }
+
+//     // })
+//     // console.log([...emojisJson.keys()])
+//     // console.log(emojisJson)// emojisJson[0].reduce((currentValue, currentIndex) => {
+//     //     console.log(currentValue, currentIndex)
+//     // },[])
+
+// });
+
+
 
 $("#screen-content").on("click", ".emoji", (event) => {
     $("#new-tweet-msg")[0].value =
