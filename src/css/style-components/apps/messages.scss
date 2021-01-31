@@ -3,6 +3,10 @@
 
     .inner-app {
         .messages-list {
+            overflow-y: scroll;
+            height: 100%;
+            position: relative;
+
             .message {
                 border-bottom: 1px solid $border-color;
                 height: 65px;
@@ -62,9 +66,10 @@
         }
 
         .btn-floating {
-            position: absolute;
-            bottom: 2%;
-            right: 5%;
+            position: fixed;
+            bottom: 15%;
+            right: 6.5%;
+            transform: scale(0.7);
         }
     }
     
