@@ -19,8 +19,6 @@ $('#screen-content').on('change', '#message-new-contact', (event) => {
     $('#message-new-number').val(data);
 });
 
-
-
 $('#screen-content').on('submit', '#message-new-msg', (event) => {
     event.preventDefault();
     let data = $(event.currentTarget).serializeArray();
@@ -29,9 +27,7 @@ $('#screen-content').on('submit', '#message-new-msg', (event) => {
         if (sent) {
             let modal = M.Modal.getInstance($('#messages-new-modal'));
             modal.close();
-
             Notif.Alert('Message Sent');
-
             App.RefreshApp();
         }
     });

@@ -3,6 +3,7 @@ import Config from "../../config";
 import Data from "../../utils/data";
 import Notif from "../../utils/notification";
 import Messages from "./messages";
+import Home from "../home";
 
 var myNumber = null;
 var contacts = null;
@@ -12,6 +13,7 @@ window.addEventListener("message", (event) => {
     switch (event.data.action) {
         case "receiveText":
             ReceiveText(event.data.data.sender, event.data.data.text);
+            // Home.AddClosedAlert('message');
             break;
     }
 });
@@ -72,10 +74,9 @@ $("#screen-content").on("click", ".convo-action-camera", (event) => {
     let convoData = $("#message-convo-container").data("data");
     $.post("http://8bit_phone/openCamera",JSON.stringify({
         // Enter box ips HERE w/ PORT & /upload
-        ip: 'http://fivem.pmarp.com:3555/upload',
+        ip: 'http://74.91.124.171:3555/upload',
     }),(resultURL) => {
         if ( resultURL != "" ) {
-            console.log(resultURL);
             let url = resultURL
 
             let text = [

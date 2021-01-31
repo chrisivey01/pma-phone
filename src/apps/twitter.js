@@ -243,21 +243,21 @@ $("#screen-content").on("click", "#emojis", (event) => {
         }
     })
 
-    
+
     categoryArray = [...emojiCategories.keys()]
     categoryArray = categoryArray.filter(item => item !== "flags")
-    categoryArray.forEach((item,i) => $(`<li><a style="font-size:10px" href=#${item}>${item}</a></li>`).appendTo('#smiley-tabs'))
+    categoryArray.forEach((item, i) => $(`<li><a style="font-size:10px" href=#${item}>${item}</a></li>`).appendTo('#smiley-tabs'))
     categoryArray.forEach(item => $('<div style="display:flex; flex-wrap:wrap; font-size: 16px; padding: 15px 5px 0 5px;" id=' + item + '></div>').appendTo("#smiley-tabs"))
     objArray.map(item => {
         $(`<a id=emoji>${item.char}</a>`).appendTo(`div #${item.category}`)
     })
-    let tabs = $( "#tabs" ).tabs();
+    let tabs = $("#tabs").tabs();
     tabs.tabs("refresh");
 })
 
 $("#screen-content").on("click", "#emoji", (event) => {
     $("#new-tweet-msg")[0].value =
-    $("#new-tweet-msg")[0].value + event.currentTarget.text;
+        $("#new-tweet-msg")[0].value + event.currentTarget.text;
     event.preventDefault();
 })
 
@@ -271,17 +271,17 @@ $("#screen-content").on("mouseleave", "#smiley-tabs div a", (event) => {
 $("#screen-content").on("click", "#smiley-tabs li", (event) => {
     const getIndex = event.currentTarget.id;
     const indexFinder = categoryArray.findIndex(cat => cat === getIndex);
-    $( "#tabs" ).tabs( "load" , indexFinder);   // zero-based (tab#1 = 0 index)
+    $("#tabs").tabs("load", indexFinder);   // zero-based (tab#1 = 0 index)
 })
 
 
 $("#screen-content").on("click", "#photo", (event) => {
     event.preventDefault();
     ClosePhone();
-    $.post("http://8bit_phone/openCamera",JSON.stringify({
+    $.post("http://8bit_phone/openCamera", JSON.stringify({
         // Enter box ips HERE w/ PORT & /upload
-        ip: 'http://fivem.pmarp.com:3555/upload',
-    }),(resultURL) => {
+        ip: 'http://74.91.124.171:3555/upload',
+    }), (resultURL) => {
         if (resultURL != "") {
             let url = resultURL;
             let myData = Data.GetData("myData");
@@ -306,13 +306,9 @@ $("#screen-content").on("click", "#photo", (event) => {
                         Notif.Alert("Failed Sending Tweet");
                     } else {
                         tweet.author = status.author;
-        
-                        // AddTweet(tweet);
-        
                         let modal = M.Modal.getInstance($("#send-tweet-modal"));
                         modal.close();
                         $("#new-tweet-msg").val("");
-        
                         Notif.Alert("Tweet Sent");
                     }
                 }
@@ -341,13 +337,13 @@ const ClosePhone = () => {
 //                 {
 //                     value: convoData.number,
 //                     receiver: convoData.receiver,
-                     
+
 //                 },
 //                 {
 //                     value: url,
 //                 },
 //             ];
-        
+
 //             Messages.SendNewText(text, (sent) => {
 //                 if (sent) {
 //                     $(".convo-texts-list").append(
@@ -357,11 +353,11 @@ const ClosePhone = () => {
 //                             moment(Date.now()).fromNowOrNow() +
 //                             "</p></div>"
 //                     );
-        
+
 //                     Notif.Alert("Message Sent");
-        
+
 //                     $("#convo-input").val("");
-        
+
 //                     if ($(".convo-texts-list .text:last-child").offset() != null) {
 //                         $(".convo-texts-list").animate(
 //                             {

@@ -346,5 +346,4 @@ export default {
     OpenApp,
     RefreshApp,
     GetCurrentApp,
-    ClosePhone,
 };
