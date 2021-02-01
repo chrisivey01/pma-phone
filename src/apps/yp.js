@@ -100,8 +100,6 @@ $('#screen-content').on('submit', '#new-advert', function (event) {
 });
 
 function AddAdvert(advert, store = true) {
-    // this magically changes to .number
-    advert.phone = advert.phone || advert.number
     if ($(`#advert-${advert.id}`).length < 1) {
         $('#yp-body').prepend(`
         <div class="yp-post" id="advert-${advert.id}">
@@ -160,8 +158,6 @@ function DeleteAdvertData(id) {
 }
 
 function ReceiveNewAdvert(advert) {
-
-    
     AddAdvertData(advert);
     if (App.GetCurrentApp() === 'ads') {
         AddAdvert(advert);
@@ -183,19 +179,15 @@ function DeleteAdvert(id) {
 }
 
 window.addEventListener('yp-open-app', () => {
-    let phone = Data.GetData('myData').id;
-    ads = Data.GetData('adverts');
+    let phone = Data.GetData('myData').phone;
+    ads = Data.GetData('adverts').filter(item => item !== null);
 
-    if (ads == null) {
-        ads = new Array()
-    }
-
-    // ads.sort(Utils.DateSortOldest);
+    ads.sort(Utils.DateSortOldest);
 
     $('#yp-body').html('');
     $.each(ads, function (index, advert) {
         AddAdvert(advert, false);
-        if (advert.id == phone) {
+        if (advert.phone == phone) {
             $('#yp-body .yp-post:first-child').addClass('yp-post-owned');
             $('#delete-ad').show();
         }

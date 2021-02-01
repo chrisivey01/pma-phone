@@ -6,8 +6,9 @@ import Notif from "../utils/notification";
 import emojisJson from '../smiley';
 
 var tweets = null;
-var notif = null;
+var notif = [];
 let categoryArray = null;
+
 
 window.addEventListener("message", (event) => {
     switch (event.data.action) {
@@ -128,13 +129,6 @@ function AddTweet(tweet) {
         );
     });
 
-    /// TODO : Figure out & implement image embeding
-    /*pattern = /https?[^<"]+/g;
-    data = tweet.message.match(pattern);
-    $.each(data, (index2, hashtag) => {
-        tweet.message = tweet.message.replace(hashtag, `<span class="hashtag" data-hashtag="${hashtag.replace('#', '')}">' + hashtag + '</span>`);
-    }); */
-
     if (tweet.author) {
         $(".twitter-body").prepend(`
             <div class="tweet">
@@ -187,9 +181,9 @@ window.addEventListener("twitter-open-app", (data) => {
 
 function ReceiveNewTweet(tweet) {
     // console.log("ReceiveNewTweet:" + JSON.stringify(tweet))
-    if (notif != null) {
-        clearTimeout(notif);
-    }
+    // if (notif != null) {
+    //     clearTimeout(notif);
+    // }
 
     if (tweets == null) {
         tweets = Data.GetData("tweets");
@@ -197,23 +191,27 @@ function ReceiveNewTweet(tweet) {
 
     Data.AddData("tweets", tweet);
 
-    $(".twitter-alert-header").find("span").html(tweet.author);
-    {
-        typeof tweet.message === "Array"
-            ? $(".twitter-alert-body").html(
-                String.fromCharCode(...tweet.message)
-            )
-            : $(".twitter-alert-body").html(tweet.message);
-    }
-    $(".twitter-alert").fadeIn();
-    notif = setTimeout(function () {
-        $(".twitter-alert").fadeOut("normal", function () {
-            $(".twitter-alert-header").find("span").html("");
+    let twitterAlert = document.querySelector(".twitter-alert");
+    let clonedTweet = twitterAlert.cloneNode(true);
+    notif.push(clonedTweet);
+    clonedTweet.childNodes[0].lastElementChild.innerHTML = tweet.author;
+    clonedTweet.childNodes[1].innerHTML = tweet.message;
+    clonedTweet.style.display = "block";
+    document.querySelector("body").append(clonedTweet);
+    
+    let length = notif.length
+    notif.forEach((tweet,i) => {
+        if(length > 1){
+            notif[length - 1].style.bottom = (length - 1) * 12 + "%" 
+            length--
+        } else {
+            notif[0].style.bottom = 0 + "px" 
+        }
+    })
 
-            $(".twitter-alert-body").html("");
-
-            notif = null;
-        });
+    setTimeout(function () {
+        notif[0].remove();
+        notif.shift()
     }, 3000);
 
     if (App.GetCurrentApp() === "twitter") {
