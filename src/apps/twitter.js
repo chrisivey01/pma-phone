@@ -56,10 +56,6 @@ $("#screen-content").on("submit", "#new-tweet", function (event) {
         );
     });
 
-    // let offset = serverTime.getTimezoneOffset() / 60;
-    // let hours = serverTime.getHours();
-    // clientTime.setHours(hours - offset);
-
     $.post(
         Config.ROOT_ADDRESS + "/NewTweet",
         JSON.stringify({
@@ -180,11 +176,6 @@ window.addEventListener("twitter-open-app", (data) => {
 });
 
 function ReceiveNewTweet(tweet) {
-    // console.log("ReceiveNewTweet:" + JSON.stringify(tweet))
-    // if (notif != null) {
-    //     clearTimeout(notif);
-    // }
-
     if (tweets == null) {
         tweets = Data.GetData("tweets");
     }
@@ -322,55 +313,6 @@ const ClosePhone = () => {
             direction: "down",
         });
 };
-// $("#screen-content").on("click", "#photo", (event) => {
-//     event.preventDefault();
-//     ClosePhone();
-//     let convoData = $("#message-convo-container").data("data");
-//     $.post("http://8bit_phone/openCamera", (resultURL) => {
-//         if ( resultURL != "" ) {
-//             console.log(resultURL);
-//             let url = resultURL
-
-//             let text = [
-//                 {
-//                     value: convoData.number,
-//                     receiver: convoData.receiver,
-
-//                 },
-//                 {
-//                     value: url,
-//                 },
-//             ];
-
-//             Messages.SendNewText(text, (sent) => {
-//                 if (sent) {
-//                     $(".convo-texts-list").append(
-//                         '<div class="text me-sender"><span>' +
-//                             url +
-//                             "</span><p>" +
-//                             moment(Date.now()).fromNowOrNow() +
-//                             "</p></div>"
-//                     );
-
-//                     Notif.Alert("Message Sent");
-
-//                     $("#convo-input").val("");
-
-//                     if ($(".convo-texts-list .text:last-child").offset() != null) {
-//                         $(".convo-texts-list").animate(
-//                             {
-//                                 scrollTop:
-//                                     $(".convo-texts-list")[0].scrollHeight -
-//                                     $(".convo-texts-list")[0].clientHeight,
-//                             },
-//                             200
-//                         );
-//                     }
-//                 }
-//             });
-//         }
-//     });
-// });
 
 $("#screen-content").on("click", ".emoji", (event) => {
     $("#new-tweet-msg")[0].value =

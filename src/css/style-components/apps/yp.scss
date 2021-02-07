@@ -1,3 +1,29 @@
+$yp: #ffe10bd6;
+
+.yp-alert {
+    display: none;
+    width: 415px;
+    min-width: 415px;
+    max-width: 415px;
+    background: $yp;
+    border-radius: 10px;
+    color: $primary;
+    position: absolute;
+    bottom: 0;
+    right: 1;
+
+    .yp-alert-header {
+        padding: 15px;
+        font-size: 20px;
+    }
+
+    .yp-alert-body {
+        padding: 15px;
+        font-size: 14px;
+        border-top: 1px solid $primary;
+    }
+}
+
 #yp-container {
     background: #ffe10bd6;
 

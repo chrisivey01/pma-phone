@@ -53,15 +53,15 @@ window.addEventListener("message", (event) => {
       break;
     case "SyncUnread":
       $.each(Data.GetData("apps"), (index, app) => {
-        if (event.data.unread[app.container] !== 0) {
-          Data.UpdateObjectData(
-            "apps",
-            "container",
-            app.container,
-            "unread",
-            event.data.unread[app.container]
-          );
-        }
+          if (event.data.unread[app.container] !== 0) {
+            Data.UpdateObjectData(
+              "apps",
+              "container",
+              app.container,
+              "unread",
+              event.data.unread[app.container]
+            );
+          }
       });
       break;
     case "AddClosedAlert":
@@ -107,31 +107,30 @@ function AddClosedAlert(notif) {
 }
 
 function SetupApp() {
-    setTimeout(() => {
-        apps = Data.GetData("apps");
-        $.each(apps, (index, app) => {
-          if (app.enabled) {
-            if (app.unread > 0) {
-              $(".inner-app").append(
-                `<div class="app-button" data-tooltip="${app.name}"><div class="app-icon" id="${app.container}-app" style="background-color: ${app.color}"> ${app.icon}<div class="badge pulse">${app.unread}</div></div></div>`
-              );
-            } else {
-              $(".inner-app").append(
-                `<div class="app-button" data-tooltip="${app.name}"><div class="app-icon" id="${app.container}-app" style="background-color: ${app.color}"> ${app.icon}</div></div>`
-              );
-            }
-            let $app = $("#home-container .app-button:last-child");
-      
-            $app.tooltip({
-              enterDelay: 0,
-              exitDelay: 0,
-              inDuration: 0,
-            });
-      
-            $app.data("app", app);
-          }
-        });
-    },200)
+  $("#home-container .app-button").remove()
+  apps = Data.GetData("apps");
+  $.each(apps, (index, app) => {
+    if (app.enabled) {
+      if (app.unread > 0) {
+        $(".inner-app").append(
+          `<div class="app-button" data-tooltip="${app.name}"><div class="app-icon" id="${app.container}-app" style="background-color: ${app.color}"> ${app.icon}<div class="badge pulse">${app.unread}</div></div></div>`
+        );
+      } else {
+        $(".inner-app").append(
+          `<div class="app-button" data-tooltip="${app.name}"><div class="app-icon" id="${app.container}-app" style="background-color: ${app.color}"> ${app.icon}</div></div>`
+        );
+      }
+      let $app = $("#home-container .app-button:last-child");
+
+      $app.tooltip({
+        enterDelay: 0,
+        exitDelay: 0,
+        inDuration: 0,
+      });
+
+      $app.data("app", app);
+    }
+  });
 }
 
 function ToggleApp(name, status) {
@@ -182,7 +181,9 @@ function UpdateUnread(name, unread) {
 }
 
 window.addEventListener("home-open-app", () => {
-  SetupApp();
+  setTimeout(() => {
+    SetupApp();
+  }, 250)
 });
 
 export default { ToggleApp, UpdateUnread, AddClosedAlert };

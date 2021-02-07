@@ -12,8 +12,7 @@ var getMessageNumber = null;
 window.addEventListener("message", (event) => {
     switch (event.data.action) {
         case "receiveText":
-            ReceiveText(event.data.data.sender, event.data.data.text);
-            // Home.AddClosedAlert('message');
+            ReceiveText(event.data.data);
             break;
     }
 });
@@ -72,61 +71,65 @@ $("#screen-content").on("click", ".convo-action-camera", (event) => {
     event.preventDefault();
     ClosePhone();
     let convoData = $("#message-convo-container").data("data");
-    $.post("http://8bit_phone/openCamera",JSON.stringify({
-        // Enter box ips HERE w/ PORT & /upload
-        ip: 'http://74.91.124.171:3555/upload',
-    }),(resultURL) => {
-        if ( resultURL != "" ) {
-            let url = resultURL
+    $.post(
+        "http://8bit_phone/openCamera",
+        JSON.stringify({
+            // Enter box ips HERE w/ PORT & /upload
+            ip: "http://74.91.124.171:3555/upload",
+        }),
+        (resultURL) => {
+            if (resultURL != "") {
+                let url = resultURL;
 
-            let text = [
-                {
-                    value: convoData.number,
-                    receiver: convoData.receiver,
-                     
-                },
-                {
-                    value: url,
-                },
-            ];
-        
-            Messages.SendNewText(text, (sent) => {
-                if (sent) {
-                    $(".convo-texts-list").append(
-                        '<div class="text me-sender"><span>' +
-                            url +
-                            "</span><p>" +
-                            moment(Date.now()).fromNowOrNow() +
-                            "</p></div>"
-                    );
-        
-                    Notif.Alert("Message Sent");
-        
-                    $("#convo-input").val("");
-        
-                    if ($(".convo-texts-list .text:last-child").offset() != null) {
-                        $(".convo-texts-list").animate(
-                            {
-                                scrollTop:
-                                    $(".convo-texts-list")[0].scrollHeight -
-                                    $(".convo-texts-list")[0].clientHeight,
-                            },
-                            200
+                let text = [
+                    {
+                        value: convoData.number,
+                        receiver: convoData.receiver,
+                    },
+                    {
+                        value: url,
+                    },
+                ];
+
+                Messages.SendNewText(text, (sent) => {
+                    if (sent) {
+                        $(".convo-texts-list").append(
+                            '<div class="text me-sender"><span>' +
+                                url +
+                                "</span><p>" +
+                                moment(Date.now()).fromNowOrNow() +
+                                "</p></div>"
                         );
-                    }
-                }
-            });
-        }
-    });
 
-    
+                        Notif.Alert("Message Sent");
+
+                        $("#convo-input").val("");
+
+                        if (
+                            $(".convo-texts-list .text:last-child").offset() !=
+                            null
+                        ) {
+                            $(".convo-texts-list").animate(
+                                {
+                                    scrollTop:
+                                        $(".convo-texts-list")[0].scrollHeight -
+                                        $(".convo-texts-list")[0].clientHeight,
+                                },
+                                200
+                            );
+                        }
+                    }
+                });
+            }
+        }
+    );
 
     // $.post(Config.ROOT_ADDRESS + "/openCamera", (result) => {
     //     console.log(result);
     //     url = result;
     // });
     // console.log(url);
-})
+});
 
 const ClosePhone = () => {
     $.post("http://8bit_phone/ClosePhone", JSON.stringify({})),
@@ -148,7 +151,6 @@ $("#screen-content").on("submit", "#convo-new-text", (event) => {
         {
             value: convoData.number,
             receiver: convoData.receiver,
-             
         },
         {
             value: data[0].value,
@@ -209,20 +211,20 @@ $("#screen-content").on("click", "#convo-delete-all", (e) => {
     );
 });
 
-function ReceiveText(sender, text) {
+function ReceiveText(textData) {
+    $.post(Config.ROOT_ADDRESS + "/UpdateMessages");
     let viewingConvo = $("#message-convo-container").data("data");
-
     if (viewingConvo != null) {
         let contact = contacts.filter(
             (c) => c.number == viewingConvo.number
         )[0];
-        if (viewingConvo.number == text.sender) {
+        if (viewingConvo.number == textData.sender) {
             if (contact != null) {
                 $(".convo-texts-list").append(
                     '<div class="text other-sender"><span class=" other-' +
                         contact.name[0] +
                         '">' +
-                        text.message +
+                        textData.text +
                         "</span><p>" +
                         moment(Date.now()).fromNowOrNow() +
                         "</p></div>"
@@ -230,7 +232,7 @@ function ReceiveText(sender, text) {
             } else {
                 $(".convo-texts-list").append(
                     '<div class="text other-sender"><span>' +
-                        text.message +
+                        textData.text +
                         "</span><p>" +
                         moment(Date.now()).fromNowOrNow() +
                         "</p></div>"
@@ -259,10 +261,10 @@ function ReceiveText(sender, text) {
     }
 
     Data.AddData("messages", {
-        sender: text.sender,
+        sender: textData.sender,
         receiver: myNumber,
-        message: text.message,
-        sent_time: text.sent_time,
+        message: textData.text,
+        sent_time: moment(Date.now()).fromNowOrNow(),
         sender_read: 0,
         receiver_read: 0,
     });
@@ -278,16 +280,25 @@ window.addEventListener("message-convo-open-app", (data) => {
     getMessageNumber = data.detail.number;
     let texts = messages.filter(
         (c) =>
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.sender == data.detail.number && c.receiver == data.detail.receiver) ||
-            (c.receiver == data.detail.number)
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            (c.sender == data.detail.number &&
+                c.receiver == data.detail.receiver) ||
+            c.receiver == data.detail.number
     );
     let contact = contacts.filter((c) => c.number == data.detail.number)[0];
 
@@ -306,7 +317,9 @@ window.addEventListener("message-convo-open-app", (data) => {
     $(".convo-texts-list").html("");
     $.each(texts, (index, text) => {
         let serverTime = new Date(text.sent_time);
-        let clientTime = new Date(serverTime.getTime()+serverTime.getTimezoneOffset()*60*1000);
+        let clientTime = new Date(
+            serverTime.getTime() + serverTime.getTimezoneOffset() * 60 * 1000
+        );
         let offset = serverTime.getTimezoneOffset() / 60;
         let hours = serverTime.getHours();
         clientTime.setHours(hours - offset);

@@ -161,7 +161,7 @@ $(".mute").on("click", (e) => {
 });
 
 function ClosePhone() {
-    $.post(Config.ROOT_ADDRESS + "/ClosePhone", JSON.stringify({}));
+    $.post(Config.ROOT_ADDRESS + "/ClosePhone", {});
     $(".wrapper").hide("slide", { direction: "down" }, 500, () => {
         $("#screen-content").trigger(
             `${appTrail[appTrail.length - 1].app}-close-app`

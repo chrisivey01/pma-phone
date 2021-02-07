@@ -1,26 +1,27 @@
-import App from '../app';
-import Config from '../config';
-import Utils from '../utils/utils';
-import Data from '../utils/data';
-import Notif from '../utils/notification';
-import Phone from './phone/phone';
+import App from "../app";
+import Config from "../config";
+import Utils from "../utils/utils";
+import Data from "../utils/data";
+import Notif from "../utils/notification";
+import Phone from "./phone/phone";
+import twitter from "./twitter";
 
 var ads = null;
 
-$('#screen-content').on('keyup', '#yp-search input', function (event) {
+$("#screen-content").on("keyup", "#yp-search input", function (event) {
     event.preventDefault();
 
     let searchVal = $(event.currentTarget).val().toUpperCase();
 
-    if (searchVal !== '') {
+    if (searchVal !== "") {
         $.each(
             $(event.currentTarget)
                 .parent()
                 .parent()
-                .find('#yp-body')
-                .find('.yp-post'),
+                .find("#yp-body")
+                .find(".yp-post"),
             function (index, advert) {
-                let data = $(advert).data('advert');
+                let data = $(advert).data("advert");
 
                 if (
                     data.author.toUpperCase().includes(searchVal) ||
@@ -39,7 +40,7 @@ $('#screen-content').on('keyup', '#yp-search input', function (event) {
             $(event.currentTarget)
                 .parent()
                 .parent()
-                .find('#yp-body')
+                .find("#yp-body")
                 .children(),
             function (index, advert) {
                 $(advert).fadeIn();
@@ -48,60 +49,66 @@ $('#screen-content').on('keyup', '#yp-search input', function (event) {
     }
 });
 
-$('#screen-content').on('click', '#yp-body .yp-phone', function (event) {
-    if ($(event.currentTarget).html() != Data.GetData('myData').phone) {
-        App.OpenApp('phone', null, false);
+$("#screen-content").on("click", "#yp-body .yp-phone", function (event) {
+    if ($(event.currentTarget).html() != Data.GetData("myData").phone) {
+        App.OpenApp("phone", null, false);
         Phone.CreateCall($(event.currentTarget).html(), false, false);
     }
 });
 
-$('#screen-content').on('click', '#delete-ad', function (event) {
-    $.post(Config.ROOT_ADDRESS + '/DeleteAd', JSON.stringify({}), () => {
-        $('#yp-body').find('.yp-post-owned').fadeOut('normal', function () {
-            $('#yp-body').find('.yp-post-owned').remove();
-            Notif.Alert('Advertisement Deleted');
-        });
-        $('#delete-ad').fadeOut();
+$("#screen-content").on("click", "#delete-ad", function (event) {
+    $.post(Config.ROOT_ADDRESS + "/DeleteAd", JSON.stringify({}), () => {
+        $("#yp-body")
+            .find(".yp-post-owned")
+            .fadeOut("normal", function () {
+                $("#yp-body").find(".yp-post-owned").remove();
+                Notif.Alert("Advertisement Deleted");
+            });
+        $("#delete-ad").fadeOut();
     });
 });
 
-$('#screen-content').on('submit', '#new-advert', function (event) {
+$("#screen-content").on("submit", "#new-advert", function (event) {
     event.preventDefault();
     let data = $(event.currentTarget).serializeArray();
 
-    let myData = Data.GetData('myData');
+    let myData = Data.GetData("myData");
     let date = Date.now();
     let title = data[0].value;
     let message = data[1].value;
 
-    $.post(Config.ROOT_ADDRESS + '/NewAd', JSON.stringify({
-        date: date,
-        title: title,
-        message: message,
-    }), function () {
-        AddAdvert({
-            id: myData.id,
-            author: myData.name,
-            phone: myData.phone,
+    $.post(
+        Config.ROOT_ADDRESS + "/NewAd",
+        JSON.stringify({
             date: date,
             title: title,
-            message: message
-        });
+            message: message,
+        }),
+        function () {
+            AddAdvert({
+                id: myData.id,
+                author: myData.name,
+                phone: myData.phone,
+                date: date,
+                title: title,
+                message: message,
+            });
 
-        let modal = M.Modal.getInstance($('#create-advert-modal'));
-        modal.close();
-        $('#new-advert').trigger('reset');
+            let modal = M.Modal.getInstance($("#create-advert-modal"));
+            modal.close();
+            $("#new-advert").trigger("reset");
 
-        $(`#advert-${myData.id}`).addClass('yp-post-owned');
-        $('#delete-ad').fadeIn();
+            $(`#advert-${myData.id}`).addClass("yp-post-owned");
+            $("#delete-ad").fadeIn();
 
-        Notif.Alert('Advertisement Posted');
-    });
+            Notif.Alert("Advertisement Posted");
+        }
+    );
 });
 
 function AddAdvert(advert, store = true) {
     if ($(`#advert-${advert.id}`).length < 1) {
-        $('#yp-body').prepend(`
+        $("#yp-body").prepend(`
         <div class="yp-post" id="advert-${advert.id}">
             <div class="yp-post-header">
                 <span class="yp-author">${advert.author}</span>
@@ -110,17 +117,23 @@ function AddAdvert(advert, store = true) {
         <div class="yp-post-body">
         <div class="yp-post-title">${advert.title}</div>
         <div class="yp-post-message">${advert.message}</div>
-        </div><div class="yp-post-timestamp">${moment(advert.date).fromNowOrNow()}</div></div>`);
-        $('#yp-body .yp-post:first-child').data('advert', advert);
+        </div><div class="yp-post-timestamp">${moment(
+            advert.date
+        ).fromNowOrNow()}</div></div>`);
+        $("#yp-body .yp-post:first-child").data("advert", advert);
         if (store) {
             AddAdvertData(advert);
         }
     } else {
-        $(`#advert-${advert.id}`).find('.yp-post-title').html(advert.title);
-        $(`#advert-${advert.id}`).find('.yp-post-message').html(advert.message);
-        $(`#advert-${advert.id}`).find('.yp-post-timestamp').html(moment(advert.date).fromNowOrNow());
-        $(`#advert-${advert.id}`).data('advert', advert);
-        $(`#advert-${advert.id}`).parent().prepend($(`#advert-${advert.id}`));
+        $(`#advert-${advert.id}`).find(".yp-post-title").html(advert.title);
+        $(`#advert-${advert.id}`).find(".yp-post-message").html(advert.message);
+        $(`#advert-${advert.id}`)
+            .find(".yp-post-timestamp")
+            .html(moment(advert.date).fromNowOrNow());
+        $(`#advert-${advert.id}`).data("advert", advert);
+        $(`#advert-${advert.id}`)
+            .parent()
+            .prepend($(`#advert-${advert.id}`));
         if (store) {
             UpdateAdvertData(advert.id, advert);
         }
@@ -128,17 +141,17 @@ function AddAdvert(advert, store = true) {
 }
 
 function AddAdvertData(data) {
-    Data.AddData('adverts', data);
+    Data.AddData("adverts", data);
 }
 
 function UpdateAdvertData(targetId, newData) {
     if (ads == null) {
-        ads = Data.GetData('adverts');
+        ads = Data.GetData("adverts");
     }
 
     $.each(ads, (index, data) => {
         if (data.id === targetId) {
-            Data.UpdateData('adverts', index, newData);
+            Data.UpdateData("adverts", index, newData);
             return;
         }
     });
@@ -146,12 +159,12 @@ function UpdateAdvertData(targetId, newData) {
 
 function DeleteAdvertData(id) {
     if (ads == null) {
-        ads = Data.GetData('adverts');
+        ads = Data.GetData("adverts");
     }
 
     $.each(ads, (index, data) => {
         if (data.id === id) {
-            Data.RemoveData('adverts', index);
+            Data.RemoveData("adverts", index);
             return;
         }
     });
@@ -159,15 +172,15 @@ function DeleteAdvertData(id) {
 
 function ReceiveNewAdvert(advert) {
     AddAdvertData(advert);
-    if (App.GetCurrentApp() === 'ads') {
+    if (App.GetCurrentApp() === "ads") {
         AddAdvert(advert);
     }
 }
 
 function DeleteAdvert(id) {
     if ($(`#advert-${id}`).length < 1) {
-        if (App.GetCurrentApp() === 'ads') {
-            $(`#advert-${id}`).fadeOut('normal', () => {
+        if (App.GetCurrentApp() === "ads") {
+            $(`#advert-${id}`).fadeOut("normal", () => {
                 $(`#advert-${id}`).remove();
             });
         } else {
@@ -178,20 +191,80 @@ function DeleteAdvert(id) {
     }
 }
 
-window.addEventListener('yp-open-app', () => {
-    let phone = Data.GetData('myData').phone;
-    ads = Data.GetData('adverts').filter(item => item !== null);
+window.addEventListener("yp-open-app", () => {
+    let phone = Data.GetData("myData").phone;
+    ads = Data.GetData("adverts");
 
-    ads.sort(Utils.DateSortOldest);
+    let adList = [];
+    Object.keys(ads).forEach((ad) => {
+        adList.push(ads[ad]);
+    });
+    adList.sort((a, b) => a.time - b.time);
 
-    $('#yp-body').html('');
-    $.each(ads, function (index, advert) {
+    $("#yp-body").html("");
+    $.each(adList, function (index, advert) {
         AddAdvert(advert, false);
         if (advert.phone == phone) {
-            $('#yp-body .yp-post:first-child').addClass('yp-post-owned');
-            $('#delete-ad').show();
+            $("#yp-body .yp-post:first-child").addClass("yp-post-owned");
+            $("#delete-ad").show();
         }
     });
 });
+
+window.addEventListener("message", (event) => {
+    switch (event.data.action) {
+        case "ReceiveAd":
+            ReceiveAd(event.data.advert);
+            break;
+    }
+});
+
+const ReceiveAd = (advert) => {
+    let ypAlert = document.querySelector(".yp-alert");
+    let ypHeader = document.querySelector(".yp-alert-header");
+    let ypBody = document.querySelector(".yp-alert-body");
+
+
+    ypHeader.innerHTML = 'Ad: ' + advert.title;
+    ypBody.innerHTML = advert.message
+
+    document.querySelector('.yp-alert').style.display = "block"
+    setTimeout(function () {
+        document.querySelector('.yp-alert').style.display = "none"
+    }, 3000);
+};
+
+// if (tweets == null) {
+//     tweets = Data.GetData("tweets");
+// }
+
+// Data.AddData("tweets", tweet);
+
+// let twitterAlert = document.querySelector(".twitter-alert");
+// let clonedTweet = twitterAlert.cloneNode(true);
+// notif.push(clonedTweet);
+// clonedTweet.childNodes[0].lastElementChild.innerHTML = tweet.author;
+// clonedTweet.childNodes[1].innerHTML = tweet.message;
+// clonedTweet.style.display = "block";
+// document.querySelector("body").append(clonedTweet);
+
+// let length = notif.length
+// notif.forEach((tweet,i) => {
+//     if(length > 1){
+//         notif[length - 1].style.bottom = (length - 1) * 12 + "%"
+//         length--
+//     } else {
+//         notif[0].style.bottom = 0 + "px"
+//     }
+// })
+
+// setTimeout(function () {
+//     notif[0].remove();
+//     notif.shift()
+// }, 3000);
+
+// if (App.GetCurrentApp() === "twitter") {
+//     AddTweet(tweet);
+// }
 
 export default { ReceiveNewAdvert, DeleteAdvert };

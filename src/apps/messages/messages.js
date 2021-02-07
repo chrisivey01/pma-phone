@@ -33,7 +33,12 @@ $('#screen-content').on('submit', '#message-new-msg', (event) => {
     });
 });
 
-window.addEventListener('message-open-app', (data) => {
+// window.addEventListener('message-open-app', () => {
+    
+// })
+
+
+window.addEventListener('message-open-app', () => {
     myNumber = Data.GetData('myData').phone;
     contacts = Data.GetData('contacts');
     messages = Data.GetData('messages');
@@ -51,8 +56,6 @@ window.addEventListener('message-open-app', (data) => {
         let obj = new Object();
 
         if (message.sender !== myNumber) {
-        //     obj.number = message.receiver;
-        // } else {
             obj.number = message.sender;
 
             obj.message = message.message;
