@@ -234,37 +234,4 @@ const ReceiveAd = (advert) => {
     }, 3000);
 };
 
-// if (tweets == null) {
-//     tweets = Data.GetData("tweets");
-// }
-
-// Data.AddData("tweets", tweet);
-
-// let twitterAlert = document.querySelector(".twitter-alert");
-// let clonedTweet = twitterAlert.cloneNode(true);
-// notif.push(clonedTweet);
-// clonedTweet.childNodes[0].lastElementChild.innerHTML = tweet.author;
-// clonedTweet.childNodes[1].innerHTML = tweet.message;
-// clonedTweet.style.display = "block";
-// document.querySelector("body").append(clonedTweet);
-
-// let length = notif.length
-// notif.forEach((tweet,i) => {
-//     if(length > 1){
-//         notif[length - 1].style.bottom = (length - 1) * 12 + "%"
-//         length--
-//     } else {
-//         notif[0].style.bottom = 0 + "px"
-//     }
-// })
-
-// setTimeout(function () {
-//     notif[0].remove();
-//     notif.shift()
-// }, 3000);
-
-// if (App.GetCurrentApp() === "twitter") {
-//     AddTweet(tweet);
-// }
-
 export default { ReceiveNewAdvert, DeleteAdvert };
