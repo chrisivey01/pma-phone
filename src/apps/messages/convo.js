@@ -316,13 +316,14 @@ window.addEventListener("message-convo-open-app", (data) => {
 
     $(".convo-texts-list").html("");
     $.each(texts, (index, text) => {
-        let serverTime = new Date(text.sent_time);
-        let clientTime = new Date(
-            serverTime.getTime() + serverTime.getTimezoneOffset() * 60 * 1000
-        );
-        let offset = serverTime.getTimezoneOffset() / 60;
-        let hours = serverTime.getHours();
-        clientTime.setHours(hours - offset);
+        const clientTime = new Date(text.sent_time);
+        // let serverTime = new Date(text.sent_time);
+        // let clientTime = new Date(
+        //     serverTime.getTime() + serverTime.getTimezoneOffset() * 60 * 1000
+        // );
+        // let offset = serverTime.getTimezoneOffset() / 60;
+        // let hours = serverTime.getHours();
+        // clientTime.setHours(hours - offset);
 
         if (text.sender == myNumber) {
             $(".convo-texts-list").append(

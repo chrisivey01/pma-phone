@@ -79,7 +79,7 @@ function SetupMessages(messages) {
         let hours = serverTime.getHours();
         clientTime.setHours(hours - offset);
 
-        $('.message-list').prepend(`<div class="irc-message"><span class="message-text">${message.message}</span><span class="message-time">${moment(clientTime).fromNowOrNow()}</span></div>`);
+        $('.message-list').prepend(`<div class="irc-message"><span class="message-text">${message.message}</span><span class="message-time">${moment(message.date).fromNowOrNow()}</span></div>`);
     });
 }
 
