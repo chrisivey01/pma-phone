@@ -12,18 +12,27 @@ const getAllCars = () => {
     $.post(Config.ROOT_ADDRESS + "/LoadGarage", (results) => {
         vehicleList = results.sort((a, b) => (a.in_city > b.in_city ? -1 : 1));
         results.forEach((car) => {
-            let homeGarageImpound;
-            if (car.in_city === true) {
-                homeGarageImpound = "In City";
-            } else if (car.state === true && car.private_parking === false) {
-                homeGarageImpound = "In Garage";
-            } else if (car.private_parking === true && car.state === true) {
-                homeGarageImpound = "Home Garage";
-            } else if (car.state === false) {
-                homeGarageImpound = "Impounded";
+            let state;
+
+            switch(car.state) {
+                case 0:
+                    state = "In Garage"
+                    break
+                case 1:
+                    state = "In City"
+                    break
+                case 2:
+                    state = "Impounded"
+                    break
+                case 3:
+                    state = "Home Garage"
+                    break
+                case 4:
+                    state = "PD Impound"
+                    break
             }
 
-            if (car.in_city === false) {
+            if (car.state !== 1) {
                 let tr = $('<tr class="row-garage">');
                 tr.append(
                     "<td>" +
@@ -31,7 +40,7 @@ const getAllCars = () => {
                         "</td>" +
                         " " +
                         "<td>" +
-                        homeGarageImpound +
+                        state +
                         "</td>"
                 );
                 table.append(tr);
@@ -43,7 +52,7 @@ const getAllCars = () => {
                         "</td>" +
                         " " +
                         "<td>" +
-                        homeGarageImpound +
+                        state +
                         "</td>"
                 );
                 table.append(tr);
