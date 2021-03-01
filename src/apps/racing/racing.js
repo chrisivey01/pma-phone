@@ -12,8 +12,16 @@ let races = null;
 // });
 
 window.addEventListener("racing-open-app",(data) => {
-    getAllRaces();
+    // getAllRaces();
+    openRaceApp();
 });
+
+const openRaceApp = () => {
+    $.post(Config.ROOT_ADDRESS + "/OpenRace", () => {
+    });
+    App.GoHome();
+    ClosePhone();
+};
 
 const getAllRaces = () => {
     let table = $('<table/>');
@@ -127,6 +135,13 @@ function startRace(data, cb) {
         raceStartData: data
     }));   
 }
+
+const ClosePhone = () => {
+    $.post("http://8bit_phone/ClosePhone", JSON.stringify({})),
+        $(".wrapper").hide("slide", {
+            direction: "down",
+        });
+};
 
 
 
