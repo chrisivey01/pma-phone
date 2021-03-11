@@ -1,10 +1,8 @@
 import App from "../app";
 import Config from "../config";
-import Utils from "../utils/utils";
 import Data from "../utils/data";
 import Notif from "../utils/notification";
 import Phone from "./phone/phone";
-import twitter from "./twitter";
 
 var ads = null;
 
@@ -224,13 +222,12 @@ const ReceiveAd = (advert) => {
     let ypHeader = document.querySelector(".yp-alert-header");
     let ypBody = document.querySelector(".yp-alert-body");
 
+    ypHeader.innerHTML = "Ad: " + advert.title;
+    ypBody.innerHTML = advert.message;
 
-    ypHeader.innerHTML = 'Ad: ' + advert.title;
-    ypBody.innerHTML = advert.message
-
-    document.querySelector('.yp-alert').style.display = "block"
+    document.querySelector(".yp-alert").style.display = "block";
     setTimeout(function () {
-        document.querySelector('.yp-alert').style.display = "none"
+        document.querySelector(".yp-alert").style.display = "none";
     }, 3000);
 };
 

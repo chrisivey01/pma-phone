@@ -19,6 +19,7 @@ window.addEventListener("message", (event) => {
 });
 
 $("#screen-content").on("submit", "#new-tweet", function (event) {
+
     event.preventDefault();
     let myData = Data.GetData("myData");
     let data = $(event.currentTarget).serializeArray();
@@ -31,6 +32,10 @@ $("#screen-content").on("submit", "#new-tweet", function (event) {
     };
 
     Data.AddData("tweets", tweet);
+
+    $("#new-tweet-msg").val("");
+    let modal = M.Modal.getInstance($("#send-tweet-modal"));
+    modal.close();
 
     let pattern = /\B@[a-z0-9_-]+/gi;
     let mentions = tweet.message.match(pattern);
@@ -72,9 +77,6 @@ $("#screen-content").on("submit", "#new-tweet", function (event) {
 
                 AddTweet(tweet);
 
-                let modal = M.Modal.getInstance($("#send-tweet-modal"));
-                modal.close();
-                $("#new-tweet-msg").val("");
 
                 Notif.Alert("Tweet Sent");
             }
@@ -89,7 +91,18 @@ $("#screen-content").on("click", ".tweet .mention", function (event) {
 
     let modal = M.Modal.getInstance($("#send-tweet-modal"));
     modal.open();
+    focusSend();
 });
+
+const focusSend = () => {
+    setTimeout(()=> {
+        $("#new-tweet-msg").focus()
+    },100)
+}
+
+$("#screen-content").on("click", ".twitter-header", (event) => {
+    focusSend();
+})
 
 $("#screen-content").on("click", ".twitter-body .author", function (event) {
     let user = $(event.currentTarget).html();
@@ -98,6 +111,7 @@ $("#screen-content").on("click", ".twitter-body .author", function (event) {
 
     let modal = M.Modal.getInstance($("#send-tweet-modal"));
     modal.open();
+    focusSend();
 });
 
 function AddTweet(tweet) {
