@@ -34,24 +34,31 @@ window.addEventListener('message', (event) => {
 
 $('#screen-content').on('submit', '#irc-new-message', (event) => {
     event.preventDefault();
-    let data = $(event.currentTarget).serializeArray();
+    if(!$('#screen-content').hasClass('submitted')) {
+        $('#screen-content').addClass('submitted')
 
-    $.post(Config.ROOT_ADDRESS + '/IRCNewMessage', JSON.stringify({
-        channel: $('.irc-channel').html(),
-        message: data[0].value
-    }), (status) => {
-        if (status) {
-            IRC.BringChannelToTop($('.irc-channel').html());
-            let msgs = [
-                { message: data[0].value, date: Date.now() }
-            ]
-            $('#irc-new-message')[0].reset();
-            SetupMessages(msgs);
-            Data.AddData(`irc-messages-${$('.irc-channel').html()}`, { message: data[0].value, date: Date.now() });
-        } else {
+        let data = $(event.currentTarget).serializeArray();
 
-        }
-    });
+        $.post(Config.ROOT_ADDRESS + '/IRCNewMessage', JSON.stringify({
+            channel: $('.irc-channel').html(),
+            message: data[0].value
+        }), (status) => {
+            if (status) {
+                IRC.BringChannelToTop($('.irc-channel').html());
+                let msgs = [
+                    { message: data[0].value, date: Date.now() }
+                ]
+                $('#irc-new-message')[0].reset();
+                SetupMessages(msgs);
+                Data.AddData(`irc-messages-${$('.irc-channel').html()}`, { message: data[0].value, date: Date.now() });
+            } else {
+
+            }
+            setTimeout(() => {
+                $('#screen-content').removeClass('submitted')
+            }, 500)
+        });
+    }
 });
 
 $('#screen-content').on('submit', '#irc-leave-channel', (event) => {

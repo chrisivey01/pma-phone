@@ -69,6 +69,7 @@ $("#screen-content").on("submit", "#convo-add-contact", (event) => {
 
 $("#screen-content").on("click", ".convo-action-camera", (event) => {
     event.preventDefault();
+
     ClosePhone();
     let convoData = $("#message-convo-container").data("data");
     $.post(
@@ -144,45 +145,52 @@ const ClosePhone = () => {
 
 $("#screen-content").on("submit", "#convo-new-text", (event) => {
     event.preventDefault();
-    let convoData = $("#message-convo-container").data("data");
-    let data = $(event.currentTarget).serializeArray();
 
-    let text = [
-        {
-            value: convoData.number,
-            receiver: convoData.receiver,
-        },
-        {
-            value: data[0].value,
-        },
-    ];
-
-    Messages.SendNewText(text, (sent) => {
-        if (sent) {
-            $(".convo-texts-list").append(
-                '<div class="text me-sender"><span>' +
-                    data[0].value +
-                    "</span><p>" +
-                    moment(Date.now()).fromNowOrNow() +
-                    "</p></div>"
-            );
-
-            Notif.Alert("Message Sent");
-
-            $("#convo-input").val("");
-
-            if ($(".convo-texts-list .text:last-child").offset() != null) {
-                $(".convo-texts-list").animate(
-                    {
-                        scrollTop:
-                            $(".convo-texts-list")[0].scrollHeight -
-                            $(".convo-texts-list")[0].clientHeight,
-                    },
-                    200
+    if(!$('#screen-content').hasClass('submitted')) {
+        $('#screen-content').addClass('submitted')
+        let convoData = $("#message-convo-container").data("data");
+        let data = $(event.currentTarget).serializeArray();
+    
+        let text = [
+            {
+                value: convoData.number,
+                receiver: convoData.receiver,
+            },
+            {
+                value: data[0].value,
+            },
+        ];
+    
+        Messages.SendNewText(text, (sent) => {
+            if (sent) {
+                $(".convo-texts-list").append(
+                    '<div class="text me-sender"><span>' +
+                        data[0].value +
+                        "</span><p>" +
+                        moment(Date.now()).fromNowOrNow() +
+                        "</p></div>"
                 );
+    
+                Notif.Alert("Message Sent");
+    
+                $("#convo-input").val("");
+    
+                if ($(".convo-texts-list .text:last-child").offset() != null) {
+                    $(".convo-texts-list").animate(
+                        {
+                            scrollTop:
+                                $(".convo-texts-list")[0].scrollHeight -
+                                $(".convo-texts-list")[0].clientHeight,
+                        },
+                        200
+                    );
+                }
             }
-        }
-    });
+        });
+        setTimeout(() => {
+            $('#screen-content').removeClass('submitted')
+        }, 500)
+    }
 });
 
 $("#screen-content").on("click", "#convo-delete-all", (e) => {
