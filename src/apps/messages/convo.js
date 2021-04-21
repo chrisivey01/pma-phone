@@ -76,7 +76,7 @@ $("#screen-content").on("click", ".convo-action-camera", (event) => {
         "http://8bit_phone/openCamera",
         JSON.stringify({
             // Enter box ips HERE w/ PORT & /upload
-            ip: "http://74.91.124.171:3555/upload",
+            ip: "http://i.pmarp.com",
         }),
         (resultURL) => {
             if (resultURL != "") {
